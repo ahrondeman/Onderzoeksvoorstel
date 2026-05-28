@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="nl" style="scroll-behavior: smooth;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -170,6 +170,7 @@
             font-size: 0.85rem;
             font-weight: 500;
             transition: background-color 0.2s;
+            white-space: nowrap;
         }
 
         .action-btn:hover {
@@ -322,18 +323,18 @@
     <nav class="sidebar">
         <h2>Onderzoeksvoorstel</h2>
         <ul>
-            <li><a href="#opdracht-start" class="active" onclick="navigateTo('opdracht-start')">📋 1. De Centrale Opdracht</a></li>
-            <li><a href="#sec-titel" onclick="navigateTo('sec-titel')">🔹 Titel & Kernwoorden</a></li>
-            <li><a href="#sec-intro" onclick="navigateTo('sec-intro')">🔹 Introductie & Lacune</a></li>
-            <li><a href="#sec-vraag" onclick="navigateTo('sec-vraag')">🔹 Onderzoeksvraag & Hypothese</a></li>
-            <li><a href="#sec-design" onclick="navigateTo('sec-design')">🔹 Onderzoeksdesign / Methode</a></li>
-            <li><a href="#sec-steekproef" onclick="navigateTo('sec-steekproef')">🔹 Steekproef & Representatie</a></li>
-            <li><a href="#sec-data" onclick="navigateTo('sec-data')">🔹 Dataverzameling & Tools</a></li>
-            <li><a href="#sec-kwaliteit" onclick="navigateTo('sec-kwaliteit')">🔹 Validiteit & Betrouwbaarheid</a></li>
-            <li><a href="#sec-analyse" onclick="navigateTo('sec-analyse')">🔹 Data-analyse & Resultaten</a></li>
-            <li><a href="#sec-ethiek" onclick="navigateTo('sec-ethiek')">🔹 Onderzoeksethiek</a></li>
-            <li><a href="#sec-referenties" onclick="navigateTo('sec-referenties')">🔹 Referenties (APA-stijl)</a></li>
-            <li><a href="#checklist-section" onclick="navigateTo('checklist-section')">✅ Voortgangs-checklist</a></li>
+            <li><a href="#opdracht-start" class="nav-link active">📋 1. De Centrale Opdracht</a></li>
+            <li><a href="#sec-titel" class="nav-link">🔹 Titel & Kernwoorden</a></li>
+            <li><a href="#sec-intro" class="nav-link">🔹 Introductie & Lacune</a></li>
+            <li><a href="#sec-vraag" class="nav-link">🔹 Onderzoeksvraag & Hypothese</a></li>
+            <li><a href="#sec-design" class="nav-link">🔹 Onderzoeksdesign / Methode</a></li>
+            <li><a href="#sec-steekproef" class="nav-link">🔹 Steekproef & Representatie</a></li>
+            <li><a href="#sec-data" class="nav-link">🔹 Dataverzameling & Tools</a></li>
+            <li><a href="#sec-kwaliteit" class="nav-link">🔹 Validiteit & Betrouwbaarheid</a></li>
+            <li><a href="#sec-analyse" class="nav-link">🔹 Data-analyse & Resultaten</a></li>
+            <li><a href="#sec-ethiek" class="nav-link">🔹 Onderzoeksethiek</a></li>
+            <li><a href="#sec-referenties" class="nav-link">🔹 Referenties (APA-stijl)</a></li>
+            <li><a href="#checklist-section" class="nav-link">✅ Voortgangs-checklist</a></li>
         </ul>
     </nav>
 
@@ -357,7 +358,7 @@
                         <strong>Titel & Kernwoorden</strong>
                         <p>Kies een korte, krachtige titel, ondertitel en 3-5 specifieke kernwoorden.</p>
                     </div>
-                    <a href="#sec-titel" class="action-btn" onclick="navigateTo('sec-titel')">Bekijk Theorie &rarr;</a>
+                    <a href="#sec-titel" class="action-btn">Bekijk Theorie &rarr;</a>
                 </div>
 
                 <div class="opdracht-node">
@@ -365,15 +366,15 @@
                         <strong>Introductie & Kennislacune (3-4 pg.)</strong>
                         <p>Context en motivatie opbouwen op basis van literatuuronderzoek om de research gap aan te tonen.</p>
                     </div>
-                    <a href="#sec-intro" class="action-btn" onclick="navigateTo('sec-intro')">Bekijk Theorie &rarr;</a>
+                    <a href="#sec-intro" class="action-btn">Bekijk Theorie &rarr;</a>
                 </div>
 
                 <div class="opdracht-node">
                     <div class="opdracht-node-text">
                         <strong>Onderzoeksvraag & Hypothese</strong>
-                        <p>Formuleren van één duidelijke, gerichte hoofdvraag, eventuele subvragen en toetsbare stellingen.</p>
+                        <p>Formuleren van één duidelijke, gerichte hoofdvraag, eventueel met subvragen.</p>
                     </div>
-                    <a href="#sec-vraag" class="action-btn" onclick="navigateTo('sec-vraag')">Bekijk Theorie &rarr;</a>
+                    <a href="#sec-vraag" class="action-btn">Bekijk Theorie &rarr;</a>
                 </div>
 
                 <div class="opdracht-node">
@@ -381,7 +382,7 @@
                         <strong>Onderzoeksdesign / Methode</strong>
                         <p>Bepalen en beargumenteren van de onderzoeksstrategie (Kwantitatief, Experimenteel, UCD).</p>
                     </div>
-                    <a href="#sec-design" class="action-btn" onclick="navigateTo('sec-design')">Bekijk Theorie &rarr;</a>
+                    <a href="#sec-design" class="action-btn">Bekijk Theorie &rarr;</a>
                 </div>
 
                 <div class="opdracht-node">
@@ -389,7 +390,7 @@
                         <strong>Steekproef & Deelnemers</strong>
                         <p>Kenmerken van de deelnemers vastleggen en zorgen voor een representatieve steekproef.</p>
                     </div>
-                    <a href="#sec-steekproef" class="action-btn" onclick="navigateTo('sec-steekproef')">Bekijk Theorie &rarr;</a>
+                    <a href="#sec-steekproef" class="action-btn">Bekijk Theorie &rarr;</a>
                 </div>
 
                 <div class="opdracht-node">
@@ -397,7 +398,7 @@
                         <strong>Dataverzameling & Tools</strong>
                         <p>Praktische inrichting van procedures (enquêtes, tests) en de gebruikte software.</p>
                     </div>
-                    <a href="#sec-data" class="action-btn" onclick="navigateTo('sec-data')">Bekijk Theorie &rarr;</a>
+                    <a href="#sec-data" class="action-btn">Bekijk Theorie &rarr;</a>
                 </div>
 
                 <div class="opdracht-node">
@@ -405,23 +406,23 @@
                         <strong>Validiteit & Betrouwbaarheid</strong>
                         <p>Kwaliteitscriteria borgen voor zowel kwantitatieve als kwalitatieve methodologieën.</p>
                     </div>
-                    <a href="#sec-kwaliteit" class="action-btn" onclick="navigateTo('sec-kwaliteit')">Bekijk Theorie &rarr;</a>
+                    <a href="#sec-kwaliteit" class="action-btn">Bekijk Theorie &rarr;</a>
                 </div>
 
                 <div class="opdracht-node">
                     <div class="opdracht-node-text">
                         <strong>Data-analyse & Verwachte Resultaten</strong>
-                        <p>Analyseren van data en schetsen van de waarde voor ontwerpers en stakeholders via grafieken of ranglijsten.</p>
+                        <p>Analyseren van data en schetsen van de waarde voor ontwerpers en stakeholders.</p>
                     </div>
-                    <a href="#sec-analyse" class="action-btn" onclick="navigateTo('sec-analyse')">Bekijk Theorie &rarr;</a>
+                    <a href="#sec-analyse" class="action-btn">Bekijk Theorie &rarr;</a>
                 </div>
 
                 <div class="opdracht-node">
                     <div class="opdracht-node-text">
                         <strong>Onderzoeksethiek</strong>
-                        <p>Ethische aspecten (respect, welzijn, rechtvaardigheid, integriteit) integreren in je keuzes.</p>
+                        <p>Ethische aspecten integreren (respect, welzijn, rechtvaardigheid, integriteit).</p>
                     </div>
-                    <a href="#sec-ethiek" class="action-btn" onclick="navigateTo('sec-ethiek')">Bekijk Theorie &rarr;</a>
+                    <a href="#sec-ethiek" class="action-btn">Bekijk Theorie &rarr;</a>
                 </div>
 
                 <div class="opdracht-node">
@@ -429,7 +430,7 @@
                         <strong>Referentielijst (APA)</strong>
                         <p>Minstens vijf wetenschappelijke bronnen correct noteren via in-tekst referenties en referentielijst.</p>
                     </div>
-                    <a href="#sec-referenties" class="action-btn" onclick="navigateTo('sec-referenties')">Bekijk Theorie &rarr;</a>
+                    <a href="#sec-referenties" class="action-btn">Bekijk Theorie &rarr;</a>
                 </div>
             </div>
         </section>
@@ -460,12 +461,12 @@
             </div>
             <div class="block-theory">
                 <span class="block-title">2. Bijhorende Theorie</span>
-                <p>De basis voor je introductie is kritisch literatuuronderzoek (chronologisch, thematisch, methodologisch of theoretisch). Je analyseert bestaande literatuur over het afgebakende thema: Wat werd er al onderzocht? Welke methoden werden gebruikt? Wat waren de beperkingen en context? Wie waren de deelnemers? Geef de lacunes in bestaande kennis aan: welke specifieke vragen over de praktijk of voorkeuren blijven onbeantwoord?</p>
+                <p>De basis voor je introductie is kritisch literatuuronderzoek. Analyseer de bestaande literatuur over het afgebakende thema: Wat werd er al onderzocht? Welke methoden werden gebruikt? Wie waren de deelnemers? Geef de lacunes in de kennis aan: welke specifieke vragen over de praktijk blijven onbeantwoord?</p>
                 <span class="source-tag">College 2, College 3 & College 4: Introductie & Literatuur</span>
             </div>
             <div class="block-app">
                 <span class="block-title">3. Concrete Toepassing</span>
-                <p>Structureer de eerste 3-4 pagina's trechtervormig: begin breed bij de maatschappelijke/ontwerpcontext en eindig specifiek bij de exacte 'research gap'. Argumenteer waarom dit probleem cruciaal is voor ontwerpers en stakeholders.</p>
+                <p>Structureer de eerste 3-4 pagina's trechtervormig: begin breed bij de maatschappelijke/ontwerpcontext en eindig specifiek bij de exacte 'research gap'. Argumenteer waarom dit probleem cruciaal is voor ontwerpers.</p>
             </div>
         </section>
 
@@ -477,15 +478,15 @@
             </div>
             <div class="block-theory">
                 <span class="block-title">2. Bijhorende Theorie</span>
-                <p>Een goede onderzoeksvraag moet specifiek, helder, meetbaar en direct relevant zijn voor het vakgebied. Binnen de deductieve wetenschappelijke methode kan hier een toetsbare, voorspellende stelling (hypothese) aan gekoppeld worden omtrent de relaties tussen variabelen, die vooraf wordt gedefinieerd en getoetst. Evaluatie in de lessen gebeurt via kleurfeedback (Groen = bruikbaar, Geel = aanscherpen, Rood = herzien).</p>
+                <p>Een goede onderzoeksvraag is specifiek, helder, meetbaar en relevant. Binnen de deductieve wetenschappelijke methode kan hier een toetsbare stelling (hypothese) aan gekoppeld worden. Evaluatie in de lessen gebeurt via kleurfeedback (Groen = bruikbaar, Geel = aanscherpen, Rood = herzien).</p>
                 <span class="source-tag">College 3, 4 & 5: Wat is goed onderzoek / Wetenschappelijke methode</span>
             </div>
             <div class="block-app">
                 <span class="block-title">3. Concrete Toepassing</span>
                 <p>Zorg dat de hoofdvraag niet met een simpele 'ja/nee' beantwoord kan worden. 
                 <ul>
-                    <li><em>Voorbeeld Hoofdvraag:</em> Welke lettertypen worden door gebruikers als het meest leesbaar en aantrekkelijk ervaren in mobiele apps?</li>
-                    <li><em>Voorbeeld Subvraag:</em> Hoe beïnvloedt het lettertype de snelheid waarmee gebruikers teksten lezen?</li>
+                    <li><em>Hoofdvraag:</em> Welke lettertypen worden als meest leesbaar en aantrekkelijk ervaren in mobiele apps?</li>
+                    <li><em>Subvraag:</em> Hoe beïnvloedt het lettertype de snelheid waarmee gebruikers teksten lezen?</li>
                 </ul>
                 </p>
             </div>
@@ -499,19 +500,19 @@
             </div>
             <div class="block-theory">
                 <span class="block-title">2. Bijhorende Theorie</span>
-                <p>Onderbouwing is cruciaal: niet enkel "wat" je gaat doen, maar vooral "waarom" op die manier. Strategieën omvatten:
+                <p>Strategieën omvatten:
                 <ul>
-                    <li><strong>Beschrijvend:</strong> Gericht op momentopnames van individuele variabelen.</li>
-                    <li><strong>Correlationeel / Niet-experimenteel:</strong> Relaties onderzoeken zoals ze natuurlijk voorkomen.</li>
-                    <li><strong>Experimenteel:</strong> Causale verbanden (oorzaak-gevolg) aantonen via actieve manipulatie van onafhankelijke variabelen en controle van storende elementen.</li>
-                    <li><strong>Human/User-Centered Design (UCD/HCD):</strong> Iteratieve, mensgerichte methodes (Double Diamond) verdeeld in exploratief, generatief of evaluatief (usability testing) onderzoek.</li>
+                    <li><strong>Beschrijvend:</strong> Momentopnames van variabelen.</li>
+                    <li><strong>Correlationeel:</strong> Relaties onderzoeken zoals ze natuurlijk voorkomen.</li>
+                    <li><strong>Experimenteel:</strong> Causale verbanden (oorzaak-gevolg) aantonen via manipulatie van onafhankelijke variabelen.</li>
+                    <li><strong>User-Centered Design (UCD):</strong> Iteratieve, mensgerichte methodes (exploratief, generatief of evaluatief zoals usability tests).</li>
                 </ul>
                 </p>
                 <span class="source-tag">College 6, 8, 9 & 10: Onderzoeksstrategieën, HCD & UCD</span>
             </div>
             <div class="block-app">
                 <span class="block-title">3. Concrete Toepassing</span>
-                <p>Motiveer je methodologie expliciet door te verwijzen naar deze academische strategieën. Toon aan dat jouw gekozen aanpak (bijvoorbeeld een kwantitatieve survey of een UCD-usability test) de meest effectieve manier is om een valide antwoord te geven op je onderzoeksvraag.</p>
+                <p>Motiveer expliciet "waarom" je een methode kiest door naar theorie te verwijzen. Toon aan dat jouw aanpak (bijv. een enquête of UCD-test) de effectiefste manier is voor jouw specifieke onderzoeksvraag.</p>
             </div>
         </section>
 
@@ -523,12 +524,12 @@
             </div>
             <div class="block-theory">
                 <span class="block-title">2. Bijhorende Theorie</span>
-                <p>Een steekproef (sample) bestaat uit de geselecteerde deelnemers uit de grotere populatie. Om externe validiteit (generaliseerbaarheid) te behalen, moet de steekproef representatief zijn; de kenmerken van de groep moeten een getrouwe afspiegeling zijn van de doelpopulatie.</p>
+                <p>Om externe validiteit (generaliseerbaarheid) te behalen, moet de steekproef representatief zijn; de kenmerken van de groep moeten een getrouwe afspiegeling zijn van de grotere doelpopulatie.</p>
                 <span class="source-tag">College 5 & 7: Kwantitatieve concepten / Enquêtes</span>
             </div>
             <div class="block-app">
                 <span class="block-title">3. Concrete Toepassing</span>
-                <p>Omschrijf nauwkeurig de inclusie- en exclusiecriteria van je deelnemers (demografie, ervaring met interfaces). Leg exact uit via welke kanalen en rekruteringsmethoden je deze doelgroep gaat bereiken om vertekening (bias) te voorkomen.</p>
+                <p>Omschrijf de inclusie- en exclusiecriteria van je deelnemers. Leg exact uit via welke kanalen en rekruteringsmethoden je deze doelgroep gaat bereiken om vertekening (bias) te voorkomen.</p>
             </div>
         </section>
 
@@ -540,12 +541,12 @@
             </div>
             <div class="block-theory">
                 <span class="block-title">2. Bijhorende Theorie</span>
-                <p>De operationalisering zet abstracte concepten (zoals "leesbaarheid" of "aantrekkelijkheid") om in concrete, objectief meetbare indicatoren en schalen (zoals Likert-schalen in een enquête of prestatie-indicatoren bij een test). Dit vereist een helder gedocumenteerde procedure.</p>
+                <p>De operationalisering zet abstracte concepten om in concrete, meetbare indicatoren (zoals Likert-schalen in een enquête). Dit vereist een helder gedocumenteerde procedure.</p>
                 <span class="source-tag">College 5, 7 & 9: Operationalisering & Meetinstrumenten</span>
             </div>
             <div class="block-app">
                 <span class="block-title">3. Concrete Toepassing</span>
-                <p>Benoem de specifieke software (bijv. Qualtrics, Google Forms of specifieke UX test-tools). Voeg een concreet blokje toe met minstens 2 à 3 uitgewerkte voorbeeldvragen of testtaken (bijv. een 5-punts Likert-schaal voor esthetische waardering).</p>
+                <p>Benoem de specifieke software (bijv. Qualtrics, Google Forms). Voeg concreet minstens 2 à 3 uitgewerkte voorbeeldvragen of testtaken toe in je document.</p>
             </div>
         </section>
 
@@ -557,17 +558,17 @@
             </div>
             <div class="block-theory">
                 <span class="block-title">2. Bijhorende Theorie</span>
-                <p>Kwaliteitscriteria zijn strikt verdeeld per methodologische aard:
+                <p>Kwaliteitscriteria:
                 <ul>
-                    <li><strong>Kwantitatief:</strong> Betrouwbaarheid (consistentie bij herhaling via standaarden), Interne Validiteit (zuivere meting zonder storende variabelen), en Externe Validiteit (generaliseerbaarheid).</li>
-                    <li><strong>Kwalitatief:</strong> Afhankelijkheid (transparante documentatie), Geloofwaardigheid (triangulatie/peer review), en Overdraagbaarheid (gedetailleerde contextbeschrijving).</li>
+                    <li><strong>Kwantitatief:</strong> Betrouwbaarheid (consistentie bij herhaling), Interne Validiteit (zuivere meting), en Externe Validiteit (generaliseerbaarheid).</li>
+                    <li><strong>Kwalitatief:</strong> Afhankelijkheid (documentatie), Geloofwaardigheid (triangulatie), en Overdraagbaarheid (contextbeschrijving).</li>
                 </ul>
                 </p>
                 <span class="source-tag">College 5: Kwaliteitscriteria voor Onderzoek (Slide 41)</span>
             </div>
             <div class="block-app">
                 <span class="block-title">3. Concrete Toepassing</span>
-                <p>Schrijf een specifieke paragraaf waarin je reflecteert op deze criteria. Leg uit hoe je storende variabelen (bijv. omgevingsfactoren, schermgrootte) controleert om de interne validiteit te bewaken en hoe je gestandaardiseerde instrumenten inzet voor de betrouwbaarheid.</p>
+                <p>Schrijf een specifieke paragraaf waarin je reflecteert op deze criteria. Leg uit hoe je storende variabelen controleert en gestandaardiseerde instrumenten inzet.</p>
             </div>
         </section>
 
@@ -575,16 +576,16 @@
             <h3>🔹 Data-analyse & Verwachte Resultaten</h3>
             <div class="block-req">
                 <span class="block-title">1. Exacte Opdrachtvereiste</span>
-                <p>Verwachte resultaten: Schrijf wat je hoopt te ontdekken en wat de waarde is van je onderzoek voor ontwerpers/stakeholders. Geef inzicht in data via geplande grafieken, statistieken of ranglijsten.</p>
+                <p>Verwachte resultaten: Schrijf wat je hoopt te ontdekken en wat de waarde is van je onderzoek voor ontwerpers/stakeholders. Geef inzicht in data via geplande grafieken of ranglijsten.</p>
             </div>
             <div class="block-theory">
                 <span class="block-title">2. Bijhorende Theorie</span>
-                <p>Data-analyse zet verzamelde ruwe data om in bruikbare antwoorden. Bij kwantitatief onderzoek omvat dit beschrijvende of inferentiële statistiek om patronen, percentages of correlaties tussen variabelen op een valide wijze bloot te leggen.</p>
+                <p>Data-analyse zet verzamelde ruwe data om in bruikbare antwoorden. Bij kwantitatief onderzoek omvat dit beschrijvende of inferentiële statistiek om patronen of correlaties bloot te leggen.</p>
                 <span class="source-tag">College 3, 7 & 10: Analyse & Toegepast onderzoek</span>
             </div>
             <div class="block-app">
                 <span class="block-title">3. Concrete Toepassing</span>
-                <p>Beschrijf concreet welke analyses je gaat uitvoeren zodra de data binnen is. Specificeer welke visualisaties je gaat genereren (bijv. "Er zal een statistische ranglijst van de meest leesbare lettertypen worden opgesteld, visueel weergegeven in een staafdiagram").</p>
+                <p>Specificeer welke visualisaties je gaat genereren (bijv. "Er zal een statistische ranglijst van de meest leesbare lettertypen worden opgesteld, visueel weergegeven in een staafdiagram").</p>
             </div>
         </section>
 
@@ -596,19 +597,12 @@
             </div>
             <div class="block-theory">
                 <span class="block-title">2. Bijhorende Theorie</span>
-                <p>Onderzoeksethiek stoelt op vier fundamentele academische kernwaarden:
-                <ul>
-                    <li><strong>Respect:</strong> Waarderen van autonomie en privacy (vrijwillige deelname, recht op intrekking).</li>
-                    <li><strong>Welzijn:</strong> Minimaliseren van risico's en afwegen tegen maatschappelijke voordelen.</li>
-                    <li><strong>Rechtvaardigheid:</strong> Voorkomen van oneerlijke lasten of uitbuiting van deelnemers.</li>
-                    <li><strong>Integriteit:</strong> Eerlijke kenniswerving, strikte navolging van standaarden, vermijden van fraude en plagiaat.</li>
-                </ul>
-                </p>
+                <p>Kernwaarden: Respect (vrijwillige deelname), Welzijn (risico's minimaliseren), Rechtvaardigheid (geen uitbuiting) en Integriteit (eerlijke kenniswerving, geen plagiaat).</p>
                 <span class="source-tag">College 6: Onderzoeksethiek & Kernwaarden (Slide 61-62)</span>
             </div>
             <div class="block-app">
                 <span class="block-title">3. Concrete Toepassing</span>
-                <p>Licht expliciet toe hoe je de data van deelnemers anonimiseert, waar en hoe deze veilig digitaal wordt opgeslagen en hoe je werkt met een formulier voor geïnformeerde toestemming (informed consent).</p>
+                <p>Licht toe hoe je de data anonimiseert, waar het veilig wordt opgeslagen en hoe je werkt met geïnformeerde toestemming (informed consent).</p>
             </div>
         </section>
 
@@ -616,19 +610,19 @@
             <h3>🔹 Referenties (APA-stijl)</h3>
             <div class="block-req">
                 <span class="block-title">1. Exacte Opdrachtvereiste</span>
-                <p>Vermeld minstens vijf wetenschappelijke bronnen die je hebt geraadpleegd om je onderzoek te ondersteunen. Gebruik hiervoor in-tekst referenties en een referentielijst in de officiële APA-referentiestijl.</p>
+                <p>Vermeld minstens vijf wetenschappelijke bronnen. Gebruik hiervoor in-tekst referenties en een referentielijst in de officiële APA-referentiestijl.</p>
             </div>
             <div class="block-theory">
                 <span class="block-title">2. Bijhorende Theorie</span>
-                <p>Het presenteren van andermans ideeën of woorden als je eigen ideeën is plagiaat en vormt een ernstige schending van de wetenschappelijke integriteit. Referenties zijn verplicht zodra andermans werk je denken of schrijven heeft beïnvloed (zowel bij directe citaten als bij parafraseren).</p>
-                <span class="source-tag">College 2, College 3 & College 6: Informatievaardigheden / Plagiaat (Slide 16 / 61)</span>
+                <p>Referenties zijn verplicht zodra andermans werk je denken of schrijven heeft beïnvloed. Plagiaat is een ernstige schending van de wetenschappelijke integriteit.</p>
+                <span class="source-tag">College 2, College 3 & College 6: Informatievaardigheden / Plagiaat</span>
             </div>
             <div class="block-app">
                 <span class="block-title">3. Concrete Toepassing</span>
-                <p>Hanteer de strikte APA-notatie doorheen je hele document:
+                <p>Hanteer strikte APA-notatie doorheen je hele document:
                 <ul>
-                    <li><em>In-tekst voorbeeld:</em> "Typografie speelt een fundamentele rol bij tekstbegrip op schermen (Lupton, 2010)."</li>
-                    <li><em>Lijst voorbeeld:</em> Fialkowski, B., & Schofield, D. (2024). Considering Color: Applying Psychology to Improve the Use of Color in Digital Interfaces. <em>Art and Design Review</em>, 12, 306–324.</li>
+                    <li><em>In-tekst voorbeeld:</em> "Typografie speelt een fundamentele rol bij tekstbegrip (Lupton, 2010)."</li>
+                    <li><em>Lijst voorbeeld:</em> Fialkowski, B., & Schofield, D. (2024). Considering Color... <em>Art and Design Review</em>, 12, 306–324.</li>
                 </ul>
                 </p>
             </div>
@@ -637,118 +631,76 @@
 
         <section class="checklist-card" id="checklist-section">
             <h2>✅ Voortgangs- & Kwaliteitschecklist</h2>
-            <p>De vinkjes die je hieronder zet, worden <strong>automatisch en permanent opgeslagen</strong> in je browser. Je kunt de pagina gerust sluiten en later verder werken.</p>
+            <p>Gebruik deze lijst voor je eigen controle voordat je indient.</p>
             
             <div class="checklist-item">
-                <input type="checkbox" id="c1" onchange="saveChecklistStatus()">
+                <input type="checkbox" id="c1">
                 <label for="c1"><strong>Omvang & Vorm:</strong> Het document telt tussen de 10 en 20 pagina's en is netjes gestructureerd.</label>
             </div>
             <div class="checklist-item">
-                <input type="checkbox" id="c2" onchange="saveChecklistStatus()">
+                <input type="checkbox" id="c2">
                 <label for="c2"><strong>Voorblad:</strong> Bevat een krachtige hoofdtitel, optionele ondertitel, alle groepsleden en 3-5 kernwoorden.</label>
             </div>
             <div class="checklist-item">
-                <input type="checkbox" id="c3" onchange="saveChecklistStatus()">
+                <input type="checkbox" id="c3">
                 <label for="c3"><strong>Introductie (3-4 pg.):</strong> Onderbouwd met literatuuronderzoek en eindigt met een heldere kennislacune (research gap).</label>
             </div>
             <div class="checklist-item">
-                <input type="checkbox" id="c4" onchange="saveChecklistStatus()">
+                <input type="checkbox" id="c4">
                 <label for="c4"><strong>Onderzoeksvraag:</strong> Bevat één centrale, gerichte hoofdvraag en een relevante subvraag.</label>
             </div>
             <div class="checklist-item">
-                <input type="checkbox" id="c5" onchange="saveChecklistStatus()">
-                <label for="c5"><strong>Methodologische Verantwoording:</strong> De gekozen strategie (Kwantitatief/UCD) is beargumenteerd vanuit de theorie.</label>
+                <input type="checkbox" id="c5">
+                <label for="c5"><strong>Methodologische Verantwoording:</strong> De gekozen strategie is beargumenteerd vanuit de theorie.</label>
             </div>
             <div class="checklist-item">
-                <input type="checkbox" id="c6" onchange="saveChecklistStatus()">
+                <input type="checkbox" id="c6">
                 <label for="c6"><strong>Steekproef & Operationalisering:</strong> Deelnemerskenmerken en meetindicatoren zijn concreet gespecificeerd.</label>
             </div>
             <div class="checklist-item">
-                <input type="checkbox" id="c7" onchange="saveChecklistStatus()">
+                <input type="checkbox" id="c7">
                 <label for="c7"><strong>Praktische Details:</strong> Specifieke software/tools zijn benoemd en voorbeeldvragen zijn toegevoegd.</label>
             </div>
             <div class="checklist-item">
-                <input type="checkbox" id="c8" onchange="saveChecklistStatus()">
+                <input type="checkbox" id="c8">
                 <label for="c8"><strong>Kwaliteitscriteria:</strong> Er is een expliciete reflectie op validiteit en betrouwbaarheid toegevoegd.</label>
             </div>
             <div class="checklist-item">
-                <input type="checkbox" id="c9" onchange="saveChecklistStatus()">
+                <input type="checkbox" id="c9">
                 <label for="c9"><strong>Verwachte Resultaten:</strong> Waarde voor stakeholders is beschreven, inclusief geplande grafieken of ranglijsten.</label>
             </div>
             <div class="checklist-item">
-                <input type="checkbox" id="c10" onchange="saveChecklistStatus()">
+                <input type="checkbox" id="c10">
                 <label for="c10"><strong>Ethiek & Bronnen:</strong> Informed consent/privacy is gewaarborgd; minstens 5 bronnen staan foutloos in APA-stijl.</label>
             </div>
         </section>
     </main>
 
     <script>
-        // Smooth navigatie en actieve menu indicator
-        function navigateTo(id) {
-            event.preventDefault();
-            const targetElement = document.getElementById(id);
-            if (targetElement) {
-                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-            updateActiveMenu(id);
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.sidebar ul li a');
 
-        function updateActiveMenu(id) {
-            const links = document.querySelectorAll('.sidebar ul li a');
-            links.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${id}`) {
-                    link.classList.add('active');
-                }
-            });
-        }
-
-        // Automatische scroll spy voor het menu
-        window.addEventListener('scroll', () => {
-            const sections = ['opdracht-start', 'sec-titel', 'sec-intro', 'sec-vraag', 'sec-design', 'sec-steekproef', 'sec-data', 'sec-kwaliteit', 'sec-analyse', 'sec-ethiek', 'sec-referenties', 'checklist-section'];
-            let activeId = 'opdracht-start';
-
-            sections.forEach(sectionId => {
-                const el = document.getElementById(sectionId);
-                if (el) {
-                    const box = el.getBoundingClientRect();
-                    if (box.top <= window.innerHeight / 3) {
-                        activeId = sectionId;
+            window.addEventListener('scroll', () => {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    // Bepaal welke sectie momenteel in beeld is
+                    if (window.scrollY >= (sectionTop - 100)) {
+                        current = section.getAttribute('id');
                     }
-                }
+                });
+
+                // Update de actieve status in het zijmenu
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
             });
-            updateActiveMenu(activeId);
         });
-
-        // SLA STATUS OP IN LOCALSTORAGE (AUTOMATISCH BIJ WIJZIGING)
-        function saveChecklistStatus() {
-            const checkboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
-            const statusObject = {};
-            
-            checkboxes.forEach(cb => {
-                statusObject[cb.id] = cb.checked;
-            });
-            
-            // Zet om naar tekst en sla op in de browser
-            localStorage.setItem('uan_onderzoek_checklist', JSON.stringify(statusObject));
-        }
-
-        // LAAD STATUS IN BIJ HET OPENEN VAN DE PAGINA
-        function loadChecklistStatus() {
-            const savedData = localStorage.getItem('uan_onderzoek_checklist');
-            if (savedData) {
-                const statusObject = JSON.parse(savedData);
-                for (const id in statusObject) {
-                    const cb = document.getElementById(id);
-                    if (cb) {
-                        cb.checked = statusObject[id];
-                    }
-                }
-            }
-        }
-
-        // Activeer de persistentie-laadfunctie direct bij het opstarten
-        window.onload = loadChecklistStatus;
     </script>
 </body>
 </html>
