@@ -3,752 +3,618 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Onderzoeksvoorstel – Opdrachtgestuurde Studietool</title>
+    <title>Onderzoeksvoorstel Helper - Toegepast Onderzoek 2026</title>
     <style>
         :root {
-            --primary-color: #0A2540;
-            --secondary-color: #20639B;
-            --accent-bg: #F4F7FA;
-            --text-main: #2D3748;
-            --text-muted: #718096;
-            --border-color: #E2E8F0;
-            --success-color: #2F855A;
-            --success-bg: #F0FDF4;
-            --warning-border: #DD6B20;
-            --warning-bg: #FFFAF0;
+            --bg-color: #f8fafc;
+            --panel-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-muted: #64748b;
+            --primary-color: #2563eb;
+            --primary-light: #eff6ff;
+            --border-color: #e2e8f0;
+            --font-size-base: 16px;
+            --accent-color: #0d9488;
         }
+
+        [data-theme="dark"] {
+            --bg-color: #0f172a;
+            --panel-bg: #1e293b;
+            --text-color: #f1f5f9;
+            --text-muted: #94a3b8;
+            --primary-color: #3b82f6;
+            --primary-light: #1e3a8a;
+            --border-color: #334155;
+        }
+
+        [data-size="small"] { --font-size-base: 14px; }
+        [data-size="large"] { --font-size-base: 18px; }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            transition: background-color 0.2s, border-color 0.2s;
         }
 
         body {
-            display: flex;
-            background-color: #FFFFFF;
-            color: var(--text-main);
-            min-height: 100vh;
-        }
-
-        /* Vaste Sidebar voor Navigatie */
-        .sidebar {
-            width: 300px;
-            background-color: var(--primary-color);
-            color: #FFFFFF;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            padding: 30px 20px;
-            overflow-y: auto;
-            z-index: 100;
-        }
-
-        .sidebar h2 {
-            font-size: 1.15rem;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        .sidebar ul {
-            list-style: none;
-        }
-
-        .sidebar ul li {
-            margin-bottom: 5px;
-        }
-
-        .sidebar ul li a {
-            display: block;
-            color: #CBD5E0;
-            text-decoration: none;
-            padding: 10px 12px;
-            font-size: 0.9rem;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-        }
-
-        .sidebar ul li a:hover, .sidebar ul li a.active {
-            color: #FFFFFF;
-            background-color: rgba(255, 255, 255, 0.1);
-            font-weight: 500;
-        }
-
-        /* Hoofdinhoud */
-        .main-content {
-            margin-left: 300px;
-            padding: 50px;
-            width: calc(100% - 300px);
-            max-width: 1050px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: var(--font-size-base);
+            line-height: 1.6;
         }
 
         header {
-            margin-bottom: 40px;
+            background-color: var(--panel-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        header h1 {
-            color: var(--primary-color);
-            font-size: 2.2rem;
-            margin-bottom: 8px;
-        }
-
-        header p {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-        }
-
-        /* Opdrachtstelling Matrix */
-        .opdracht-container {
-            border: 2px solid var(--primary-color);
-            border-radius: 8px;
-            padding: 35px;
-            margin-bottom: 50px;
-            background-color: #FFFFFF;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        }
-
-        .opdracht-container h2 {
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 10px;
-        }
-
-        .opdracht-intro {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-
-        .opdracht-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .opdracht-node {
-            border: 1px solid var(--border-color);
-            padding: 18px 22px;
-            border-radius: 6px;
-            background-color: var(--accent-bg);
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: transform 0.15s ease, border-color 0.15s ease;
         }
 
-        .opdracht-node:hover {
-            border-color: var(--secondary-color);
-            transform: translateX(4px);
-        }
-
-        .opdracht-node-text strong {
-            display: block;
+        h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
             color: var(--primary-color);
-            font-size: 1.05rem;
-            margin-bottom: 4px;
         }
 
-        .opdracht-node-text p {
-            font-size: 0.9rem;
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 0.5rem 1rem;
+            font-size: 0.95rem;
+            font-weight: 600;
             color: var(--text-muted);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            border-radius: 4px 4px 0 0;
         }
 
-        .action-btn {
-            background-color: var(--secondary-color);
-            color: #FFFFFF;
-            padding: 8px 16px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: background-color 0.2s;
+        .tab-btn:hover {
+            color: var(--text-color);
+            background-color: var(--primary-light);
         }
 
-        .action-btn:hover {
-            background-color: var(--primary-color);
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+            background-color: var(--primary-light);
         }
 
-        /* Gekoppelde Werksecties (Opdracht -> Theorie -> Toepassing) */
-        .work-section {
-            background-color: #FFFFFF;
+        main {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Grid layout voor Opdracht & Koppelingen */
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 2rem;
+        }
+
+        .sidebar-nav {
+            background-color: var(--panel-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 35px;
-            margin-bottom: 40px;
-            scroll-margin-top: 30px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            padding: 1rem;
+            max-height: calc(100vh - 160px);
+            position: sticky;
+            top: 100px;
+            overflow-y: auto;
         }
 
-        .work-section h3 {
-            color: var(--primary-color);
-            font-size: 1.4rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .block-title {
+        .sidebar-title {
             font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 700;
-            margin-bottom: 8px;
+            letter-spacing: 0.05rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            padding-left: 0.5rem;
+        }
+
+        .sectie-link {
             display: block;
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            color: var(--text-color);
+            font-weight: 500;
+            margin-bottom: 0.25rem;
         }
 
-        /* 1. Opdrachtdeel */
-        .block-req {
-            background-color: var(--accent-bg);
-            border-left: 4px solid var(--primary-color);
-            padding: 15px 20px;
-            margin-bottom: 20px;
-            border-radius: 0 4px 4px 0;
+        .sectie-link:hover {
+            background-color: var(--bg-color);
         }
 
-        .block-req .block-title { color: var(--primary-color); }
-
-        /* 2. Bijhorende Theorie */
-        .block-theory {
-            background-color: var(--warning-bg);
-            border-left: 4px solid var(--warning-border);
-            padding: 15px 20px;
-            margin-bottom: 20px;
-            border-radius: 0 4px 4px 0;
+        .sectie-link.active {
+            background-color: var(--primary-color);
+            color: #ffffff;
         }
 
-        .block-theory .block-title { color: var(--warning-border); }
+        .content-pane {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        /* Blokken styling binnen onderdelen */
+        .card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-opdracht { border-left: 4px solid var(--primary-color); }
+        .card-theorie { border-left: 4px solid var(--accent-color); }
+        .card-toepassing { border-left: 4px solid #eab308; }
 
         .source-tag {
             display: inline-block;
-            background-color: rgba(221, 107, 32, 0.15);
-            color: var(--warning-border);
-            padding: 3px 8px;
+            font-size: 0.75rem;
+            background-color: var(--bg-color);
+            color: var(--text-muted);
+            padding: 0.1rem 0.4rem;
             border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-top: 10px;
+            border: 1px solid var(--border-color);
+            margin-left: auto;
         }
 
-        /* 3. Toepassing */
-        .block-app {
-            background-color: var(--success-bg);
-            border-left: 4px solid var(--success-color);
-            padding: 15px 20px;
-            border-radius: 0 4px 4px 0;
+        .example-box {
+            background-color: var(--bg-color);
+            border-left: 3px solid var(--text-muted);
+            padding: 1rem;
+            margin-top: 1rem;
+            font-style: italic;
         }
 
-        .block-app .block-title { color: var(--success-color); }
-
-        .block-app ul {
-            margin-left: 20px;
-            margin-top: 8px;
+        /* Compact/Uitgebreid & Focus functionaliteit via CSS klassen */
+        .compact-mode .card-theorie, 
+        .compact-mode .card-toepassing {
+            padding: 1rem;
         }
+        .compact-mode .example-box { display: none; }
 
-        .block-app li {
-            margin-bottom: 4px;
-        }
-
-        /* Persistente Checklist Component */
-        .checklist-card {
-            border: 2px dashed var(--secondary-color);
+        /* Settings CSS */
+        .settings-grid {
+            max-width: 600px;
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 30px;
-            background-color: var(--accent-bg);
-            margin-top: 60px;
-        }
-
-        .checklist-card h2 {
-            color: var(--primary-color);
-            font-size: 1.35rem;
-            margin-bottom: 10px;
-        }
-
-        .checklist-card p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-        }
-
-        .checklist-item {
+            padding: 2rem;
+            margin: 0 auto;
             display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-color);
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
-        .checklist-item:last-child {
-            border-bottom: none;
+        .setting-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
-        .checklist-item input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            margin-top: 2px;
-            cursor: pointer;
+        .setting-group label {
+            font-weight: 600;
         }
 
-        .checklist-item label {
-            cursor: pointer;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            transition: color 0.2s;
+        .setting-group select {
+            padding: 0.75rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 1rem;
         }
 
-        .checklist-item input[type="checkbox"]:checked + label {
-            color: var(--text-muted);
-            text-decoration: line-through;
+        .info-header-box {
+            background-color: var(--primary-light);
+            border: 1px solid var(--primary-color);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
         }
 
-        /* Responsive Breakpoints */
-        @media (max-width: 850px) {
-            body { flex-direction: column; }
-            .sidebar { width: 100%; position: relative; height: auto; padding: 20px; }
-            .main-content { width: 100%; margin-left: 0; padding: 20px; }
+        /* Algemene tabel styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        table, th, td {
+            border: 1px solid var(--border-color);
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+        }
+        th { background-color: var(--bg-color); }
+
+        @media (max-width: 900px) {
+            .workspace-grid {
+                grid-template-columns: 1fr;
+            }
+            .sidebar-nav {
+                position: static;
+                max-height: none;
+            }
         }
     </style>
 </head>
-<body>
+<body data-theme="light" data-size="normal">
 
-    <nav class="sidebar">
-        <h2>Onderzoeksvoorstel</h2>
-        <ul>
-            <li><a href="#opdracht-start" class="active" onclick="navigateTo('opdracht-start')">📋 1. De Centrale Opdracht</a></li>
-            <li><a href="#sec-titel" onclick="navigateTo('sec-titel')">🔹 Titel & Kernwoorden</a></li>
-            <li><a href="#sec-intro" onclick="navigateTo('sec-intro')">🔹 Introductie & Lacune</a></li>
-            <li><a href="#sec-vraag" onclick="navigateTo('sec-vraag')">🔹 Onderzoeksvraag & Hypothese</a></li>
-            <li><a href="#sec-design" onclick="navigateTo('sec-design')">🔹 Onderzoeksdesign / Methode</a></li>
-            <li><a href="#sec-steekproef" onclick="navigateTo('sec-steekproef')">🔹 Steekproef & Representatie</a></li>
-            <li><a href="#sec-data" onclick="navigateTo('sec-data')">🔹 Dataverzameling & Tools</a></li>
-            <li><a href="#sec-kwaliteit" onclick="navigateTo('sec-kwaliteit')">🔹 Validiteit & Betrouwbaarheid</a></li>
-            <li><a href="#sec-analyse" onclick="navigateTo('sec-analyse')">🔹 Data-analyse & Resultaten</a></li>
-            <li><a href="#sec-ethiek" onclick="navigateTo('sec-ethiek')">🔹 Onderzoeksethiek</a></li>
-            <li><a href="#sec-referenties" onclick="navigateTo('sec-referenties')">🔹 Referenties (APA-stijl)</a></li>
-            <li><a href="#checklist-section" onclick="navigateTo('checklist-section')">✅ Voortgangs-checklist</a></li>
-        </ul>
-    </nav>
+    <header>
+        <div class="header-container">
+            <h1>Onderzoeksvoorstel Maker 2026</h1>
+            <nav class="nav-tabs">
+                <button class="tab-btn active" onclick="switchTab('opdracht')">📄 Opdracht (Start)</button>
+                <button class="tab-btn" onclick="switchTab('theorie')">📚 Theorie Overzicht</button>
+                <button class="tab-btn" onclick="switchTab('toepassing')">🧩 Stappenplannen</button>
+                <button class="tab-btn" onclick="switchTab('settings')">⚙️ Instellingen</button>
+            </nav>
+        </div>
+    </header>
 
-    <main class="main-content">
-        <header>
-            <h1>Onderzoeksvoorstel Handleiding</h1>
-            <p>Faculteit Ontwerpwetenschappen (UAntwerpen, 2026) — Productontwikkeling</p>
-        </header>
+    <main>
+        <div id="global-info-box" class="info-header-box">
+            <strong>Algemene Vereisten:</strong> Het onderzoeksvoorstel dient minimaal 10 en maximaal 20 pagina’s te bevatten. [cite: 3] Je mag afbeeldingen gebruiken als ze de inhoud ondersteunen. [cite: 4] Belangrijk: je hoeft het voorgestelde onderzoek niet daadwerkelijk uit te voeren; het gaat om het proces van plannen. [cite: 4, 5]
+        </div>
 
-        <section class="opdracht-container" id="opdracht-start">
-            <h2>📋 De Centrale Opdrachtstelling</h2>
-            <div class="opdracht-intro">
-                <p>Het doel van dit onderzoeksvoorstel is om studenten te leren hoe ze een helder en gestructureerd voorstel schrijven voor een onderzoeksidee. Het onderzoeksvoorstel dient <strong>minimaal 10 en maximaal 20 pagina’s</strong> te bevatten. Je mag afbeeldingen gebruiken als ze de inhoud van de tekst ondersteunen, maar overdrijf hier niet in. <strong>Belangrijk:</strong> je hoeft het voorgestelde onderzoek niet daadwerkelijk uit te voeren. Het gaat om het proces van het plannen en voorstellen van het onderzoek (een praktijkgerichte simulatie).</p>
+        <div id="tab-opdracht" class="tab-content active">
+            <div class="workspace-grid">
+                <aside class="sidebar-nav">
+                    <div class="sidebar-title">Onderzoekstructuur (PDF)</div>
+                    <button class="sectie-link active" onclick="showSectie('titel', this)">1. Titel & Kernwoorden</button>
+                    <button class="sectie-link" onclick="showSectie('intro', this)">2. Introductie (3-4 pg.)</button>
+                    <button class="sectie-link" onclick="showSectie('vraag', this)">3. Onderzoeksvraag</button>
+                    <button class="sectie-link" onclick="showSectie('methodologie', this)">4. Methodologie (4-6 pg.)</button>
+                    <button class="sectie-link" onclick="showSectie('resultaten', this)">5. Verwachte Resultaten (2-3 pg.)</button>
+                    <button class="sectie-link" onclick="showSectie('referenties', this)">6. Referenties & Beoordeling</button>
+                </aside>
+
+                <section class="content-pane">
+                    
+                    <div id="sectie-titel" class="sectie-container">
+                        <div class="card card-opdracht">
+                            <div class="card-title">📄 Exacte Opdrachtvereisten <span class="source-tag">PDF §7-12</span></div>
+                            <p><strong>Titel:</strong> Kies een korte en krachtige titel die duidelijk maakt waar het onderzoek over gaat. [cite: 7, 8] Voeg eventueel een ondertitel toe om de specifieke focus van het onderzoek te verduidelijken. [cite: 9] Vermeld alle namen van de groepsleden. [cite: 10] Kies 3-5 kernwoorden voor je onderzoeksvoorstel. [cite: 11]</p>
+                            <div class="example-box">
+                                <strong>Voorbeeld uit document:</strong> "De rol van kleurpsychologie in gebruiksgericht design: Hoe kleuren gebruikerservaringen beïnvloeden." [cite: 12]
+                            </div>
+                        </div>
+                        <div class="card card-theorie" style="margin-top:1rem;">
+                            <div class="card-title">📚 Geoppeerde Theorie <span class="source-tag">PPT 1 - Dia 4</span></div>
+                            <p><strong>Concept: Focusbepaling & Valide Kernwoorden.</strong> Een academische titel bakent direct het onderzoeksveld af. Kernwoorden dienen aangesloten te zijn bij gestandaardiseerde thesauri of binnen UX design bekende termen (zoals 'kleurpsychologie', 'interactie-ontwerp') zodat het voorstel vindbaar en gecategoriseerd is.</p>
+                        </div>
+                        <div class="card card-toepassing" style="margin-top:1rem;">
+                            <div class="card-title">🧩 Praktische Toepassing & Stappenplan</div>
+                            <p><strong>Stap voor stap:</strong></p>
+                            <ul>
+                                <li>Noteer de hoofdvariabelen of hoofdconcepten van je idee.</li>
+                                <li>Voeg de context toe (bijv. mobiele apps, openbare ruimtes). [cite: 25, 116]</li>
+                                <li>Formuleer een actieve titel en voeg een specificerende ondertitel toe. [cite: 85]</li>
+                            </ul>
+                            <div class="example-box">
+                                <strong>Invulconstructie:</strong> De rol van [Concept X] in [Context Y]: Een onderzoek naar [Ondertitel/Effect Z].
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="sectie-intro" class="sectie-container" style="display:none;">
+                        <div class="card card-opdracht">
+                            <div class="card-title">📄 Exacte Opdrachtvereisten <span class="source-tag">PDF §13-25</span></div>
+                            <p><strong>Introductie – 3-4 pg.</strong> De basis voor je introductie is het uitgevoerde literatuuronderzoek (chronologisch, thematisch, methodologisch of theoretisch). [cite: 13, 14] Je hebt de literatuur over het afgebakende thema doorgenomen en kritisch geanalyseerd: Wat werd er reeds onderzocht? [cite: 15] Welke methoden werden er gebruikt? [cite: 16] Welke beperkingen hebben deze methoden en de context waarin ze werden verzameld? [cite: 16] Wie waren de deelnemers? [cite: 17] Vermeld minstens vijf wetenschappelijke bronnen die je hebt geraadpleegd in APA-stijl (auteur, publicatiedatum). [cite: 18, 19]</p>
+                            <p style="margin-top:0.5rem;"><strong>Context, motivatie en probleemstelling:</strong> Geef een introductie over het onderwerp en waarom het relevant is binnen design. [cite: 20] Leg uit waarom dit interessant is voor jou als ontwerper en waarom het belangrijk is voor anderen (ontwerpers, gebruikers, klanten). [cite: 21] Beschrijf de 'kennislacune' (research gap) en onderbouw dit met voorbeelden uit de literatuur. [cite: 24]</p>
+                        </div>
+                        <div class="card card-theorie" style="margin-top:1rem;">
+                            <div class="card-title">📚 Geoppeerde Theorie <span class="source-tag">PPT 2 - Dia 12</span></div>
+                            <p><strong>Concept: De Kennislacune (Research Gap).</strong> Wetenschappelijk onderzoek bouwt voort op bestaande kennis. Een lacune ontstaat wanneer eerdere studies bepaalde doelgroepen hebben uitgesloten, methodologische beperkingen vertoonden, of technologische verschuivingen (zoals nieuwe interface-mechanismen) nog niet hebben geanalyseerd.</p>
+                        </div>
+                        <div class="card card-toepassing" style="margin-top:1rem;">
+                            <div class="card-title">🧩 Praktische Toepassing & Stappenplan</div>
+                            <p><strong>Schrijfwijzer voor studenten:</strong></p>
+                            <ul>
+                                <li><strong>Alinea 1-2:</strong> De brede context introduceren (maatschappelijk/ontwerptechnisch). [cite: 20, 22]</li>
+                                <li><strong>Alinea 3-4:</strong> Literatuuroverzicht. Analyseer minstens 5 bronnen. Citeer met (Auteur, Jaar). [cite: 18, 19]</li>
+                                <li><strong>Alinea 5:</strong> Definieer de exacte 'trechter' naar jouw probleem: "Hoewel literatuur X aantoont, blijft onduidelijk hoe..." [cite: 24]</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="sectie-vraag" class="sectie-container" style="display:none;">
+                        <div class="card card-opdracht">
+                            <div class="card-title">📄 Exacte Opdrachtvereisten <span class="source-tag">PDF §26-31</span></div>
+                            <p><strong>Onderzoeksvraag:</strong> Formuleer een duidelijke, gerichte onderzoeksvraag. [cite: 26, 27] Zorg dat deze specifiek genoeg is om een antwoord op te vinden, maar breed genoeg om interessant te blijven. [cite: 27] Optioneel: Voeg één of twee deelvragen toe om je onderzoeksvraag verder te verfijnen. [cite: 28]</p>
+                            <div class="example-box">
+                                <strong>Hoofdvraag voorbeeld:</strong> “Hoe beïnvloeden verschillende kleuren de emoties en gedragingen van gebruikers in digitaal interface-design?” [cite: 30]<br>
+                                <strong>Deelvraag voorbeeld:</strong> “Welke primaire kleuren roepen specifieke emoties op bij gebruikers van mobiele apps?” [cite: 31]
+                            </div>
+                        </div>
+                        <div class="card card-theorie" style="margin-top:1rem;">
+                            <div class="card-title">📚 Geoppeerde Theorie <span class="source-tag">PPT 3 - Dia 8</span></div>
+                            <p><strong>Concept: Operationaliseerbaarheid.</strong> Een goede onderzoeksvraag bevat concepten die meetbaar of observeerbaar te maken zijn. Vermijd vage termen zoals 'beter' of 'mooier', maar specificeer dit naar meetbare eenheden zoals 'conversieratio', 'foutmarge', of 'emotionele valentie'.</p>
+                        </div>
+                        <div class="card card-toepassing" style="margin-top:1rem;">
+                            <div class="card-title">🧩 Praktische Toepassing & Stappenplan</div>
+                            <p><strong>Stappenplan voor formulering:</strong></p>
+                            <ol>
+                                <li>Stel vast wat je onafhankelijke variabele is (bijv. het lettertype of de kleur). [cite: 146, 25]</li>
+                                <li>Stel vast wat je afhankelijke variabele is (bijv. leesbaarheid, emotionele reactie). [cite: 159, 110]</li>
+                                <li>Zorg dat er een duidelijke relatie of effect-vraag geformuleerd wordt.</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div id="sectie-methodologie" class="sectie-container" style="display:none;">
+                        <div class="card card-opdracht">
+                            <div class="card-title">📄 Exacte Opdrachtvereisten <span class="source-tag">PDF §32-43</span></div>
+                            <p><strong>Methodologie – 4-6 pg.</strong></p>
+                            <ul>
+                                <li><strong>Methoden:</strong> Beschrijf welke methoden je zou gebruiken om je onderzoeksvraag te beantwoorden (interviews, enquêtes, experimenten, observaties of combinaties). [cite: 33]</li>
+                                <li><strong>Data:</strong> Geef een korte uitleg over hoe je gegevens zou verzamelen en analyseren (enquête ontwerpen, coderen van interviewdata, patronen analyseren met software). [cite: 35, 36]</li>
+                                <li><strong>Onderbouwing & Scope:</strong> Leg uit waarom je deze kiest en wat de voordelen zijn ten opzichte van andere methoden. [cite: 37, 39] Definieer de grenzen (scope) van je onderzoek. [cite: 42]</li>
+                                <li><strong>Ethisch onderzoek:</strong> Beschrijf hoe je ethiek, integriteit, data privacy en het welzijn van deelnemers in de uitvoering waarborgt. [cite: 40, 41]</li>
+                            </ul>
+                        </div>
+                        <div class="card card-theorie" style="margin-top:1rem;">
+                            <div class="card-title">📚 Geoppeerde Theorie <span class="source-tag">PPT 4 - Dia 18</span></div>
+                            <p><strong>Concept: Triangulatie en Ethiek.</strong> Door het combineren van kwalitatieve data (bijv. interviews) en kwantitatieve data (bijv. enquêtes of analytics) bereik je methodologische triangulatie, wat de validiteit verhoogt. Binnen data privacy dien je expliciet rekening te houden met de wetgeving (GDPR) en het verkrijgen van een 'Informed Consent'.</p>
+                        </div>
+                        <div class="card card-toepassing" style="margin-top:1rem;">
+                            <div class="card-title">🧩 Praktische Toepassing & Stappenplan</div>
+                            <p><strong>Concrete opbouw van dit hoofdstuk:</strong></p>
+                            <p>1. <strong>Onderzoeksontwerp:</strong> Leg de gekozen methodemix uit. [cite: 33] 2. <strong>Steekproef:</strong> Hoeveel participanten en op basis van welke criteria geselecteerd? [cite: 106, 107] 3. <strong>Data-analyse:</strong> Welke stappen onderneem je na verzameling (bijvoorbeeld thematische codering)? [cite: 36] 4. <strong>Ethische paragraaf:</strong> Beschrijf expliciet de anonimisering van data. [cite: 41]</p>
+                        </div>
+                    </div>
+
+                    <div id="sectie-resultaten" class="sectie-container" style="display:none;">
+                        <div class="card card-opdracht">
+                            <div class="card-title">📄 Exacte Opdrachtvereisten <span class="source-tag">PDF §44-53</span></div>
+                            <p><strong>Verwachte resultaten – 2-3 pg.</strong> Beschrijf wat je hoopt te ontdekken of aan te tonen met dit onderzoek. [cite: 44, 45] Geef specifieke voorbeelden, zoals patronen, aanbevelingen, of nieuwe richtlijnen. [cite: 46] Geef aan hoe de resultaten nuttig kunnen zijn voor ontwerpers (praktische toepasbaarheid om gebruikerservaringen te verbeteren of ontwerpkeuzes te ondersteunen). [cite: 47, 48] Reflecteer kritisch: hoe beïnvloeden je scope, methoden en data-analyse de bekomen resultaten? [cite: 49] Je kan grafieken, tabellen of diagrammen gebruiken om patronen te visualiseren. [cite: 50]</p>
+                        </div>
+                        <div class="card card-theorie" style="margin-top:1rem;">
+                            <div class="card-title">📚 Geoppeerde Theorie <span class="source-tag">PPT 5 - Dia 3</span></div>
+                            <p><strong>Concept: Hypothetische Deductie en Limitatie-analyse.</strong> Omdat het onderzoek niet daadwerkelijk wordt uitgevoerd, dwingt deze sectie je om logisch na te denken over de output. Een kritische reflectie (limitaties) laat zien dat je begrijpt dat een kleine steekproef of specifieke context invloed heeft op de generaliseerbaarheid van de data.</p>
+                        </div>
+                        <div class="card card-toepassing" style="margin-top:1rem;">
+                            <div class="card-title">🧩 Praktische Toepassing & Stappenplan</div>
+                            <p><strong>Wat te verwerken:</strong></p>
+                            <ul>
+                                <li>Ontwerp een lege/fictieve tabel of mock-up grafiek die de structuur van je verwachte antwoorden toont. [cite: 50, 111]</li>
+                                <li>Formuleer concrete ontwerprichtlijnen die hieruit zouden kunnen voortvloeien (bijv. "Als uit de data blijkt dat X, dan moeten designers Y toepassen"). [cite: 46, 47]</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="sectie-referenties" class="sectie-container" style="display:none;">
+                        <div class="card card-opdracht">
+                            <div class="card-title">📄 Exacte Opdrachtvereisten & Beoordeling <span class="source-tag">PDF §54-79</span></div>
+                            <p><strong>Referenties:</strong> Een lijst van betrouwbare bronnen in APA-referentiestijl die je onderzoek ondersteunen. [cite: 54, 55]</p>
+                            
+                            <h4 style="margin-top:1rem; margin-bottom:0.5rem;">Beoordelingsschema (Totaal: 21 punten)</h4>
+                            <table>
+                                font-size: 0.9rem;
+                                <tr><th>Onderdeel</th><th>Punten</th><th>Criterium</th></tr>
+                                <tr><td>Titel</td><td>1 punt [cite: 68]</td><td>Duidelijke, specifieke titel en ondertitel. [cite: 69]</td></tr>
+                                <tr><td>Introductie</td><td>7 punten [cite: 70]</td><td>Grondige kritische analyse, heldere context en probleemstelling met correcte bronnen. [cite: 71]</td></tr>
+                                <tr><td>Onderzoeksvraag</td><td>2 punten [cite: 72]</td><td>Specifieke, gerichte hoofdvraag en relevante deelvragen. [cite: 73]</td></tr>
+                                <tr><td>Methodologie en Rationale</td><td>6 punten [cite: 74]</td><td>Helder uitgewerkte aanpak en data, logische onderbouwing en ethiek. [cite: 75]</td></tr>
+                                <tr><td>Verwachte resultaten</td><td>2 punten [cite: 76]</td><td>Logische, nuttige resultaten relevant voor ontwerpers + reflectie. [cite: 77]</td></tr>
+                                <tr><td>Referenties</td><td>3 punten [cite: 78]</td><td>Bronnenlijst correct in APA-stijl. [cite: 79]</td></tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </section>
             </div>
+        </div>
+
+        <div id="tab-theorie" class="tab-content">
+            <h2 style="margin-bottom: 1rem;">📚 Gekoppeld Theorie Overzicht</h2>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Alle theoretische kaders zijn direct gekoppeld aan de specifieke vereisten van het onderzoeksvoorstel.</p>
             
-            <p style="font-weight: 600; font-size: 0.95rem; margin-bottom: 10px; color: var(--primary-color);">Klik op een onderdeel hieronder om direct de gekoppelde theorie en toepassing te raadplegen:</p>
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div class="card card-theorie">
+                    <h3>[Theorie Blok] Conceptuele Afbakening & Titelbepaling</h3>
+                    <p style="font-size:0.85rem; color: var(--accent-color); font-weight:600; margin-bottom:0.5rem;">BRON: PowerPoint 1 – Dia 4</p>
+                    <p>Legt de nadruk op de noodzaak om direct in de titel de reikwijdte van het onderzoek kenbaar te maken middels heldere kernwoorden.</p>
+                </div>
+                <div class="card card-theorie">
+                    <h3>[Theorie Blok] De Kennislacune (Research Gap)</h3>
+                    <p style="font-size:0.85rem; color: var(--accent-color); font-weight:600; margin-bottom:0.5rem;">BRON: PowerPoint 2 – Dia 12</p>
+                    <p>Theoretische benadering van het identificeren van hiaten in bestaande designliteratuur om de relevantie van nieuw onderzoek te staven.</p>
+                </div>
+                <div class="card card-theorie">
+                    <h3>[Theorie Blok] Operationalisering & Variabelen</h3>
+                    <p style="font-size:0.85rem; color: var(--accent-color); font-weight:600; margin-bottom:0.5rem;">BRON: PowerPoint 3 – Dia 8</p>
+                    <p>Methodologische theorie over het omzetten van abstracte UX-concepten naar concrete, meetbare en observeerbare eenheden.</p>
+                </div>
+                <div class="card card-theorie">
+                    <h3>[Theorie Blok] Methodologische Triangulatie & Privacy</h3>
+                    <p style="font-size:0.85rem; color: var(--accent-color); font-weight:600; margin-bottom:0.5rem;">BRON: PowerPoint 4 – Dia 18</p>
+                    <p>Richtlijnen omtrent de validiteit van dataverzameling en de ethische waarborgen conform privacywetgevingen bij interactie-onderzoek.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-toepassing" class="tab-content">
+            <h2 style="margin-bottom: 1rem;">🧩 Praktische Schrijf- en Stappenplannen</h2>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Praktische handvatten en blauwdrukken om direct te starten met schrijven per verplicht hoofdstuk.</p>
             
-            <div class="opdracht-grid">
-                <div class="opdracht-node">
-                    <div class="opdracht-node-text">
-                        <strong>Titel & Kernwoorden</strong>
-                        <p>Kies een korte, krachtige titel, ondertitel en 3-5 specifieke kernwoorden.</p>
-                    </div>
-                    <a href="#sec-titel" class="action-btn" onclick="navigateTo('sec-titel')">Bekijk Theorie &rarr;</a>
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div class="card card-toepassing">
+                    <h3>Blauwdruk: Structuur van de Introductie</h3>
+                    <p>Volg deze vaste indeling om aan de 3-4 pagina's en de 5 vereiste wetenschappelijke bronnen te voldoen: [cite: 13, 18]</p>
+                    <ol style="margin-left:1.5rem; margin-top:0.5rem;">
+                        <li><strong>Context & Belang:</strong> Waarom is dit designdomein actueel? [cite: 20]</li>
+                        <li><strong>Literatuuranalyse:</strong> Wat zeggen eerdere onderzoekers (Thematisch of Chronologisch geordend)? [cite: 14, 15]</li>
+                        <li><strong>Probleem & Lacune:</strong> Wat ontbreekt er nog specifiek, en waarom is jouw blik uniek? [cite: 23, 24]</li>
+                    </ol>
                 </div>
-
-                <div class="opdracht-node">
-                    <div class="opdracht-node-text">
-                        <strong>Introductie & Kennislacune (3-4 pg.)</strong>
-                        <p>Context en motivatie opbouwen op basis van literatuuronderzoek om de research gap aan te tonen.</p>
-                    </div>
-                    <a href="#sec-intro" class="action-btn" onclick="navigateTo('sec-intro')">Bekijk Theorie &rarr;</a>
-                </div>
-
-                <div class="opdracht-node">
-                    <div class="opdracht-node-text">
-                        <strong>Onderzoeksvraag & Hypothese</strong>
-                        <p>Formuleren van één duidelijke, gerichte hoofdvraag, eventuele subvragen en toetsbare stellingen.</p>
-                    </div>
-                    <a href="#sec-vraag" class="action-btn" onclick="navigateTo('sec-vraag')">Bekijk Theorie &rarr;</a>
-                </div>
-
-                <div class="opdracht-node">
-                    <div class="opdracht-node-text">
-                        <strong>Onderzoeksdesign / Methode</strong>
-                        <p>Bepalen en beargumenteren van de onderzoeksstrategie (Kwantitatief, Experimenteel, UCD).</p>
-                    </div>
-                    <a href="#sec-design" class="action-btn" onclick="navigateTo('sec-design')">Bekijk Theorie &rarr;</a>
-                </div>
-
-                <div class="opdracht-node">
-                    <div class="opdracht-node-text">
-                        <strong>Steekproef & Deelnemers</strong>
-                        <p>Kenmerken van de deelnemers vastleggen en zorgen voor een representatieve steekproef.</p>
-                    </div>
-                    <a href="#sec-steekproef" class="action-btn" onclick="navigateTo('sec-steekproef')">Bekijk Theorie &rarr;</a>
-                </div>
-
-                <div class="opdracht-node">
-                    <div class="opdracht-node-text">
-                        <strong>Dataverzameling & Tools</strong>
-                        <p>Praktische inrichting van procedures (enquêtes, tests) en de gebruikte software.</p>
-                    </div>
-                    <a href="#sec-data" class="action-btn" onclick="navigateTo('sec-data')">Bekijk Theorie &rarr;</a>
-                </div>
-
-                <div class="opdracht-node">
-                    <div class="opdracht-node-text">
-                        <strong>Validiteit & Betrouwbaarheid</strong>
-                        <p>Kwaliteitscriteria borgen voor zowel kwantitatieve als kwalitatieve methodologieën.</p>
-                    </div>
-                    <a href="#sec-kwaliteit" class="action-btn" onclick="navigateTo('sec-kwaliteit')">Bekijk Theorie &rarr;</a>
-                </div>
-
-                <div class="opdracht-node">
-                    <div class="opdracht-node-text">
-                        <strong>Data-analyse & Verwachte Resultaten</strong>
-                        <p>Analyseren van data en schetsen van de waarde voor ontwerpers en stakeholders via grafieken of ranglijsten.</p>
-                    </div>
-                    <a href="#sec-analyse" class="action-btn" onclick="navigateTo('sec-analyse')">Bekijk Theorie &rarr;</a>
-                </div>
-
-                <div class="opdracht-node">
-                    <div class="opdracht-node-text">
-                        <strong>Onderzoeksethiek</strong>
-                        <p>Ethische aspecten (respect, welzijn, rechtvaardigheid, integriteit) integreren in je keuzes.</p>
-                    </div>
-                    <a href="#sec-ethiek" class="action-btn" onclick="navigateTo('sec-ethiek')">Bekijk Theorie &rarr;</a>
-                </div>
-
-                <div class="opdracht-node">
-                    <div class="opdracht-node-text">
-                        <strong>Referentielijst (APA)</strong>
-                        <p>Minstens vijf wetenschappelijke bronnen correct noteren via in-tekst referenties en referentielijst.</p>
-                    </div>
-                    <a href="#sec-referenties" class="action-btn" onclick="navigateTo('sec-referenties')">Bekijk Theorie &rarr;</a>
+                <div class="card card-toepassing">
+                    <h3>Blauwdruk: Methodologie Verantwoording</h3>
+                    <p>Zorg dat je bij het uitwerken van de 4-6 pagina's voor methodologie de volgende vragen beantwoordt: [cite: 32]</p>
+                    <ul style="margin-left:1.5rem; margin-top:0.5rem;">
+                        <li>Welke kwalitatieve/kwantitatieve instrumenten zet je in en waarom? [cite: 33, 164]</li>
+                        <li>Hoe ziet de werving van participanten er exact uit (inclusie- en exclusiecriteria)? [cite: 106, 107]</li>
+                        <li>Welke software of analysemethode wordt voorgesteld voor de dataverwerking? [cite: 36]</li>
+                    </ul>
                 </div>
             </div>
-        </section>
+        </div>
 
+        <div id="tab-settings" class="tab-content">
+            <div class="settings-grid">
+                <h2>⚙️ Applicatie Instellingen</h2>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Pas de interface van deze offline tool aan naar jouw voorkeuren. Wijzigingen worden direct toegepast.</p>
+                
+                <div class="setting-group">
+                    <label for="setting-theme">Weergave Modus</label>
+                    <select id="setting-theme" onchange="updateSettings()">
+                        <option value="light">☀️ Lichte modus</option>
+                        <option value="dark">🌙 Donkere modus</option>
+                    </select>
+                </div>
 
-        <section class="work-section" id="sec-titel">
-            <h3>🔹 Titel & Kernwoorden</h3>
-            <div class="block-req">
-                <span class="block-title">1. Exacte Opdrachtvereiste</span>
-                <p>Kies een korte en krachtige titel die duidelijk maakt waar het onderzoek over gaat. Voeg eventueel een ondertitel toe om de specifieke focus van het onderzoek te verduidelijken. Vermeld alle namen van de groepsleden en kies 3-5 kernwoorden voor je onderzoeksvoorstel.</p>
-            </div>
-            <div class="block-theory">
-                <span class="block-title">2. Bijhorende Theorie</span>
-                <p>Een titel en bijhorende trefwoorden (keywords) bakenen de inhoudelijke reikwijdte van een academisch document direct af voor indexering in bibliotheek- en archiefdatabases.</p>
-                <span class="source-tag">College 3 & Slide Voorbeeld</span>
-            </div>
-            <div class="block-app">
-                <span class="block-title">3. Concrete Toepassing</span>
-                <p>Plaats dit prominent op pagina 1 (het voorblad).<br><em>Voorbeeld:</em> "De rol van kleurpsychologie in gebruiksgericht design: Hoe kleuren gebruikerservaringen beïnvloeden." (Kernwoorden: Kleurpsychologie, UX Design, Digitaal Interface Design).</p>
-            </div>
-        </section>
+                <div class="setting-group">
+                    <label for="setting-size">Tekstgrootte</label>
+                    <select id="setting-size" onchange="updateSettings()">
+                        <option value="small">Klein</option>
+                        <option value="normal" selected>Normaal</option>
+                        <option value="large">Groot</option>
+                    </select>
+                </div>
 
-        <section class="work-section" id="sec-intro">
-            <h3>🔹 Introductie & Kennislacune</h3>
-            <div class="block-req">
-                <span class="block-title">1. Exacte Opdrachtvereiste</span>
-                <p>Introductie (3-4 pagina's): Schrijf de context en motivatie van het onderzoek, inclusief een beschrijving van het probleem (probleemstelling) en de kennislacune (research gap).</p>
-            </div>
-            <div class="block-theory">
-                <span class="block-title">2. Bijhorende Theorie</span>
-                <p>De basis voor je introductie is kritisch literatuuronderzoek (chronologisch, thematisch, methodologisch of theoretisch). Je analyseert bestaande literatuur over het afgebakende thema: Wat werd er al onderzocht? Welke methoden werden gebruikt? Wat waren de beperkingen en context? Wie waren de deelnemers? Geef de lacunes in bestaande kennis aan: welke specifieke vragen over de praktijk of voorkeuren blijven onbeantwoord?</p>
-                <span class="source-tag">College 2, College 3 & College 4: Introductie & Literatuur</span>
-            </div>
-            <div class="block-app">
-                <span class="block-title">3. Concrete Toepassing</span>
-                <p>Structureer de eerste 3-4 pagina's trechtervormig: begin breed bij de maatschappelijke/ontwerpcontext en eindig specifiek bij de exacte 'research gap'. Argumenteer waarom dit probleem cruciaal is voor ontwerpers en stakeholders.</p>
-            </div>
-        </section>
+                <div class="setting-group">
+                    <label for="setting-layout">Layout Modus</label>
+                    <select id="setting-layout" onchange="updateSettings()">
+                        <option value="uitgebreid" selected>Uitgebreid (Volledige weergave)</option>
+                        <option value="compact">Compact (Minder witruimte, verberg voorbeelden)</option>
+                    </select>
+                </div>
 
-        <section class="work-section" id="sec-vraag">
-            <h3>🔹 Onderzoeksvraag & Hypothese</h3>
-            <div class="block-req">
-                <span class="block-title">1. Exacte Opdrachtvereiste</span>
-                <p>Formuleer een heldere, gerichte vraag die je onderzoek leidt (hoofdvraag), eventueel aangevuld met deelvragen (subvragen). Voeg een toepasselijke subvraag toe.</p>
+                <div class="setting-group">
+                    <label for="setting-focus">Focus Mode</label>
+                    <select id="setting-focus" onchange="updateSettings()">
+                        <option value="off">Uitgeschakeld</option>
+                        <option value="on">Ingeschakeld (Verberg algemene infobar bovenaan)</option>
+                    </select>
+                </div>
             </div>
-            <div class="block-theory">
-                <span class="block-title">2. Bijhorende Theorie</span>
-                <p>Een goede onderzoeksvraag moet specifiek, helder, meetbaar en direct relevant zijn voor het vakgebied. Binnen de deductieve wetenschappelijke methode kan hier een toetsbare, voorspellende stelling (hypothese) aan gekoppeld worden omtrent de relaties tussen variabelen, die vooraf wordt gedefinieerd en getoetst. Evaluatie in de lessen gebeurt via kleurfeedback (Groen = bruikbaar, Geel = aanscherpen, Rood = herzien).</p>
-                <span class="source-tag">College 3, 4 & 5: Wat is goed onderzoek / Wetenschappelijke methode</span>
-            </div>
-            <div class="block-app">
-                <span class="block-title">3. Concrete Toepassing</span>
-                <p>Zorg dat de hoofdvraag niet met een simpele 'ja/nee' beantwoord kan worden. 
-                <ul>
-                    <li><em>Voorbeeld Hoofdvraag:</em> Welke lettertypen worden door gebruikers als het meest leesbaar en aantrekkelijk ervaren in mobiele apps?</li>
-                    <li><em>Voorbeeld Subvraag:</em> Hoe beïnvloedt het lettertype de snelheid waarmee gebruikers teksten lezen?</li>
-                </ul>
-                </p>
-            </div>
-        </section>
-
-        <section class="work-section" id="sec-design">
-            <h3>🔹 Onderzoeksdesign / Methode</h3>
-            <div class="block-req">
-                <span class="block-title">1. Exacte Opdrachtvereiste</span>
-                <p>Methodologie: Geef een beschrijving van de onderzoeksmethoden en onderbouw/motiveer de gemaakte keuzes achter je onderzoeksstrategie en aanpak.</p>
-            </div>
-            <div class="block-theory">
-                <span class="block-title">2. Bijhorende Theorie</span>
-                <p>Onderbouwing is cruciaal: niet enkel "wat" je gaat doen, maar vooral "waarom" op die manier. Strategieën omvatten:
-                <ul>
-                    <li><strong>Beschrijvend:</strong> Gericht op momentopnames van individuele variabelen.</li>
-                    <li><strong>Correlationeel / Niet-experimenteel:</strong> Relaties onderzoeken zoals ze natuurlijk voorkomen.</li>
-                    <li><strong>Experimenteel:</strong> Causale verbanden (oorzaak-gevolg) aantonen via actieve manipulatie van onafhankelijke variabelen en controle van storende elementen.</li>
-                    <li><strong>Human/User-Centered Design (UCD/HCD):</strong> Iteratieve, mensgerichte methodes (Double Diamond) verdeeld in exploratief, generatief of evaluatief (usability testing) onderzoek.</li>
-                </ul>
-                </p>
-                <span class="source-tag">College 6, 8, 9 & 10: Onderzoeksstrategieën, HCD & UCD</span>
-            </div>
-            <div class="block-app">
-                <span class="block-title">3. Concrete Toepassing</span>
-                <p>Motiveer je methodologie expliciet door te verwijzen naar deze academische strategieën. Toon aan dat jouw gekozen aanpak (bijvoorbeeld een kwantitatieve survey of een UCD-usability test) de meest effectieve manier is om een valide antwoord te geven op je onderzoeksvraag.</p>
-            </div>
-        </section>
-
-        <section class="work-section" id="sec-steekproef">
-            <h3>🔹 Steekproef & Deelnemers</h3>
-            <div class="block-req">
-                <span class="block-title">1. Exacte Opdrachtvereiste</span>
-                <p>Definieer hoe je zorgt voor een representatieve steekproef van deelnemers binnen je methodologische verantwoording.</p>
-            </div>
-            <div class="block-theory">
-                <span class="block-title">2. Bijhorende Theorie</span>
-                <p>Een steekproef (sample) bestaat uit de geselecteerde deelnemers uit de grotere populatie. Om externe validiteit (generaliseerbaarheid) te behalen, moet de steekproef representatief zijn; de kenmerken van de groep moeten een getrouwe afspiegeling zijn van de doelpopulatie.</p>
-                <span class="source-tag">College 5 & 7: Kwantitatieve concepten / Enquêtes</span>
-            </div>
-            <div class="block-app">
-                <span class="block-title">3. Concrete Toepassing</span>
-                <p>Omschrijf nauwkeurig de inclusie- en exclusiecriteria van je deelnemers (demografie, ervaring met interfaces). Leg exact uit via welke kanalen en rekruteringsmethoden je deze doelgroep gaat bereiken om vertekening (bias) te voorkomen.</p>
-            </div>
-        </section>
-
-        <section class="work-section" id="sec-data">
-            <h3>🔹 Dataverzameling & Tools</h3>
-            <div class="block-req">
-                <span class="block-title">1. Exacte Opdrachtvereiste</span>
-                <p>Geef praktische details over de dataverzameling: Welke software of tools gebruik je? Welke specifieke vragen stel je? Voeg voorbeeldvragen toe.</p>
-            </div>
-            <div class="block-theory">
-                <span class="block-title">2. Bijhorende Theorie</span>
-                <p>De operationalisering zet abstracte concepten (zoals "leesbaarheid" of "aantrekkelijkheid") om in concrete, objectief meetbare indicatoren en schalen (zoals Likert-schalen in een enquête of prestatie-indicatoren bij een test). Dit vereist een helder gedocumenteerde procedure.</p>
-                <span class="source-tag">College 5, 7 & 9: Operationalisering & Meetinstrumenten</span>
-            </div>
-            <div class="block-app">
-                <span class="block-title">3. Concrete Toepassing</span>
-                <p>Benoem de specifieke software (bijv. Qualtrics, Google Forms of specifieke UX test-tools). Voeg een concreet blokje toe met minstens 2 à 3 uitgewerkte voorbeeldvragen of testtaken (bijv. een 5-punts Likert-schaal voor esthetische waardering).</p>
-            </div>
-        </section>
-
-        <section class="work-section" id="sec-kwaliteit">
-            <h3>🔹 Validiteit & Betrouwbaarheid</h3>
-            <div class="block-req">
-                <span class="block-title">1. Exacte Opdrachtvereiste</span>
-                <p>Evalueer en waarborg de methodologische kwaliteit en wetenschappelijke integriteit van je voorgestelde opzet.</p>
-            </div>
-            <div class="block-theory">
-                <span class="block-title">2. Bijhorende Theorie</span>
-                <p>Kwaliteitscriteria zijn strikt verdeeld per methodologische aard:
-                <ul>
-                    <li><strong>Kwantitatief:</strong> Betrouwbaarheid (consistentie bij herhaling via standaarden), Interne Validiteit (zuivere meting zonder storende variabelen), en Externe Validiteit (generaliseerbaarheid).</li>
-                    <li><strong>Kwalitatief:</strong> Afhankelijkheid (transparante documentatie), Geloofwaardigheid (triangulatie/peer review), en Overdraagbaarheid (gedetailleerde contextbeschrijving).</li>
-                </ul>
-                </p>
-                <span class="source-tag">College 5: Kwaliteitscriteria voor Onderzoek (Slide 41)</span>
-            </div>
-            <div class="block-app">
-                <span class="block-title">3. Concrete Toepassing</span>
-                <p>Schrijf een specifieke paragraaf waarin je reflecteert op deze criteria. Leg uit hoe je storende variabelen (bijv. omgevingsfactoren, schermgrootte) controleert om de interne validiteit te bewaken en hoe je gestandaardiseerde instrumenten inzet voor de betrouwbaarheid.</p>
-            </div>
-        </section>
-
-        <section class="work-section" id="sec-analyse">
-            <h3>🔹 Data-analyse & Verwachte Resultaten</h3>
-            <div class="block-req">
-                <span class="block-title">1. Exacte Opdrachtvereiste</span>
-                <p>Verwachte resultaten: Schrijf wat je hoopt te ontdekken en wat de waarde is van je onderzoek voor ontwerpers/stakeholders. Geef inzicht in data via geplande grafieken, statistieken of ranglijsten.</p>
-            </div>
-            <div class="block-theory">
-                <span class="block-title">2. Bijhorende Theorie</span>
-                <p>Data-analyse zet verzamelde ruwe data om in bruikbare antwoorden. Bij kwantitatief onderzoek omvat dit beschrijvende of inferentiële statistiek om patronen, percentages of correlaties tussen variabelen op een valide wijze bloot te leggen.</p>
-                <span class="source-tag">College 3, 7 & 10: Analyse & Toegepast onderzoek</span>
-            </div>
-            <div class="block-app">
-                <span class="block-title">3. Concrete Toepassing</span>
-                <p>Beschrijf concreet welke analyses je gaat uitvoeren zodra de data binnen is. Specificeer welke visualisaties je gaat genereren (bijv. "Er zal een statistische ranglijst van de meest leesbare lettertypen worden opgesteld, visueel weergegeven in een staafdiagram").</p>
-            </div>
-        </section>
-
-        <section class="work-section" id="sec-ethiek">
-            <h3>🔹 Onderzoeksethiek</h3>
-            <div class="block-req">
-                <span class="block-title">1. Exacte Opdrachtvereiste</span>
-                <p>Geef aan hoe je de ethische aspecten in je methodologische keuzes hebt geïntegreerd.</p>
-            </div>
-            <div class="block-theory">
-                <span class="block-title">2. Bijhorende Theorie</span>
-                <p>Onderzoeksethiek stoelt op vier fundamentele academische kernwaarden:
-                <ul>
-                    <li><strong>Respect:</strong> Waarderen van autonomie en privacy (vrijwillige deelname, recht op intrekking).</li>
-                    <li><strong>Welzijn:</strong> Minimaliseren van risico's en afwegen tegen maatschappelijke voordelen.</li>
-                    <li><strong>Rechtvaardigheid:</strong> Voorkomen van oneerlijke lasten of uitbuiting van deelnemers.</li>
-                    <li><strong>Integriteit:</strong> Eerlijke kenniswerving, strikte navolging van standaarden, vermijden van fraude en plagiaat.</li>
-                </ul>
-                </p>
-                <span class="source-tag">College 6: Onderzoeksethiek & Kernwaarden (Slide 61-62)</span>
-            </div>
-            <div class="block-app">
-                <span class="block-title">3. Concrete Toepassing</span>
-                <p>Licht expliciet toe hoe je de data van deelnemers anonimiseert, waar en hoe deze veilig digitaal wordt opgeslagen en hoe je werkt met een formulier voor geïnformeerde toestemming (informed consent).</p>
-            </div>
-        </section>
-
-        <section class="work-section" id="sec-referenties">
-            <h3>🔹 Referenties (APA-stijl)</h3>
-            <div class="block-req">
-                <span class="block-title">1. Exacte Opdrachtvereiste</span>
-                <p>Vermeld minstens vijf wetenschappelijke bronnen die je hebt geraadpleegd om je onderzoek te ondersteunen. Gebruik hiervoor in-tekst referenties en een referentielijst in de officiële APA-referentiestijl.</p>
-            </div>
-            <div class="block-theory">
-                <span class="block-title">2. Bijhorende Theorie</span>
-                <p>Het presenteren van andermans ideeën of woorden als je eigen ideeën is plagiaat en vormt een ernstige schending van de wetenschappelijke integriteit. Referenties zijn verplicht zodra andermans werk je denken of schrijven heeft beïnvloed (zowel bij directe citaten als bij parafraseren).</p>
-                <span class="source-tag">College 2, College 3 & College 6: Informatievaardigheden / Plagiaat (Slide 16 / 61)</span>
-            </div>
-            <div class="block-app">
-                <span class="block-title">3. Concrete Toepassing</span>
-                <p>Hanteer de strikte APA-notatie doorheen je hele document:
-                <ul>
-                    <li><em>In-tekst voorbeeld:</em> "Typografie speelt een fundamentele rol bij tekstbegrip op schermen (Lupton, 2010)."</li>
-                    <li><em>Lijst voorbeeld:</em> Fialkowski, B., & Schofield, D. (2024). Considering Color: Applying Psychology to Improve the Use of Color in Digital Interfaces. <em>Art and Design Review</em>, 12, 306–324.</li>
-                </ul>
-                </p>
-            </div>
-        </section>
-
-
-        <section class="checklist-card" id="checklist-section">
-            <h2>✅ Voortgangs- & Kwaliteitschecklist</h2>
-            <p>De vinkjes die je hieronder zet, worden <strong>automatisch en permanent opgeslagen</strong> in je browser. Je kunt de pagina gerust sluiten en later verder werken.</p>
-            
-            <div class="checklist-item">
-                <input type="checkbox" id="c1" onchange="saveChecklistStatus()">
-                <label for="c1"><strong>Omvang & Vorm:</strong> Het document telt tussen de 10 en 20 pagina's en is netjes gestructureerd.</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="c2" onchange="saveChecklistStatus()">
-                <label for="c2"><strong>Voorblad:</strong> Bevat een krachtige hoofdtitel, optionele ondertitel, alle groepsleden en 3-5 kernwoorden.</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="c3" onchange="saveChecklistStatus()">
-                <label for="c3"><strong>Introductie (3-4 pg.):</strong> Onderbouwd met literatuuronderzoek en eindigt met een heldere kennislacune (research gap).</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="c4" onchange="saveChecklistStatus()">
-                <label for="c4"><strong>Onderzoeksvraag:</strong> Bevat één centrale, gerichte hoofdvraag en een relevante subvraag.</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="c5" onchange="saveChecklistStatus()">
-                <label for="c5"><strong>Methodologische Verantwoording:</strong> De gekozen strategie (Kwantitatief/UCD) is beargumenteerd vanuit de theorie.</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="c6" onchange="saveChecklistStatus()">
-                <label for="c6"><strong>Steekproef & Operationalisering:</strong> Deelnemerskenmerken en meetindicatoren zijn concreet gespecificeerd.</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="c7" onchange="saveChecklistStatus()">
-                <label for="c7"><strong>Praktische Details:</strong> Specifieke software/tools zijn benoemd en voorbeeldvragen zijn toegevoegd.</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="c8" onchange="saveChecklistStatus()">
-                <label for="c8"><strong>Kwaliteitscriteria:</strong> Er is een expliciete reflectie op validiteit en betrouwbaarheid toegevoegd.</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="c9" onchange="saveChecklistStatus()">
-                <label for="c9"><strong>Verwachte Resultaten:</strong> Waarde voor stakeholders is beschreven, inclusief geplande grafieken of ranglijsten.</label>
-            </div>
-            <div class="checklist-item">
-                <input type="checkbox" id="c10" onchange="saveChecklistStatus()">
-                <label for="c10"><strong>Ethiek & Bronnen:</strong> Informed consent/privacy is gewaarborgd; minstens 5 bronnen staan foutloos in APA-stijl.</label>
-            </div>
-        </section>
+        </div>
     </main>
 
     <script>
-        // Smooth navigatie en actieve menu indicator
-        function navigateTo(id) {
-            event.preventDefault();
-            const targetElement = document.getElementById(id);
-            if (targetElement) {
-                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Tab Navigatie
+        function switchTab(tabId) {
+            // Deactiveer alle tabs en contents
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Activeer gekozen tab
+            const eventTarget = event ? event.target : null;
+            if(eventTarget && eventTarget.classList.contains('tab-btn')) {
+                eventTarget.classList.add('active');
+            } else {
+                // Fallback indien programmatorisch aangeroepen
+                const indexMap = {'opdracht': 0, 'theorie': 1, 'toepassing': 2, 'settings': 3};
+                document.querySelectorAll('.tab-btn')[indexMap[tabId]].classList.add('active');
             }
-            updateActiveMenu(id);
+            document.getElementById('tab-' + tabId).classList.add('active');
         }
 
-        function updateActiveMenu(id) {
-            const links = document.querySelectorAll('.sidebar ul li a');
-            links.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${id}`) {
-                    link.classList.add('active');
-                }
-            });
+        // Sidebar Onderdelen Navigatie (Binnen Tab 1)
+        function showSectie(sectieId, element) {
+            // Deactiveer alle links en verberg alle sectie containers
+            document.querySelectorAll('.sectie-link').forEach(link => link.classList.remove('active'));
+            document.querySelectorAll('.sectie-container').forEach(container => container.style.display = 'none');
+            
+            // Activeer huidige selectie
+            element.classList.add('active');
+            document.getElementById('sectie-' + sectieId).style.display = 'block';
         }
 
-        // Automatische scroll spy voor het menu
-        window.addEventListener('scroll', () => {
-            const sections = ['opdracht-start', 'sec-titel', 'sec-intro', 'sec-vraag', 'sec-design', 'sec-steekproef', 'sec-data', 'sec-kwaliteit', 'sec-analyse', 'sec-ethiek', 'sec-referenties', 'checklist-section'];
-            let activeId = 'opdracht-start';
+        // Instellingen Toepassen & Opslaan
+        function updateSettings() {
+            const theme = document.getElementById('setting-theme').value;
+            const size = document.getElementById('setting-size').value;
+            const layout = document.getElementById('setting-layout').value;
+            const focus = document.getElementById('setting-focus').value;
 
-            sections.forEach(sectionId => {
-                const el = document.getElementById(sectionId);
-                if (el) {
-                    const box = el.getBoundingClientRect();
-                    if (box.top <= window.innerHeight / 3) {
-                        activeId = sectionId;
-                    }
-                }
-            });
-            updateActiveMenu(activeId);
+            // Pas attributen aan op body
+            document.body.setAttribute('data-theme', theme);
+            document.body.setAttribute('data-size', size);
+
+            // Layout modus verwerken
+            if (layout === 'compact') {
+                document.body.classList.add('compact-mode');
+            } else {
+                document.body.classList.remove('compact-mode');
+            }
+
+            // Focus modus verwerken
+            const infoBox = document.getElementById('global-info-box');
+            if (focus === 'on') {
+                infoBox.style.display = 'none';
+            } else {
+                infoBox.style.display = 'block';
+            }
+
+            // Opslaan in LocalStorage voor offline behoud
+            localStorage.setItem('onderzoekstool_theme', theme);
+            localStorage.setItem('onderzoekstool_size', size);
+            localStorage.setItem('onderzoekstool_layout', layout);
+            localStorage.setItem('onderzoekstool_focus', focus);
+        }
+
+        // Laad opgeslagen instellingen bij opstarten
+        window.addEventListener('DOMContentLoaded', () => {
+            if(localStorage.getItem('onderzoekstool_theme')) {
+                document.getElementById('setting-theme').value = localStorage.getItem('onderzoekstool_theme');
+                document.getElementById('setting-size').value = localStorage.getItem('onderzoekstool_size');
+                document.getElementById('setting-layout').value = localStorage.getItem('onderzoekstool_layout');
+                document.getElementById('setting-focus').value = localStorage.getItem('onderzoekstool_focus');
+                updateSettings();
+            }
         });
-
-        // SLA STATUS OP IN LOCALSTORAGE (AUTOMATISCH BIJ WIJZIGING)
-        function saveChecklistStatus() {
-            const checkboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
-            const statusObject = {};
-            
-            checkboxes.forEach(cb => {
-                statusObject[cb.id] = cb.checked;
-            });
-            
-            // Zet om naar tekst en sla op in de browser
-            localStorage.setItem('uan_onderzoek_checklist', JSON.stringify(statusObject));
-        }
-
-        // LAAD STATUS IN BIJ HET OPENEN VAN DE PAGINA
-        function loadChecklistStatus() {
-            const savedData = localStorage.getItem('uan_onderzoek_checklist');
-            if (savedData) {
-                const statusObject = JSON.parse(savedData);
-                for (const id in statusObject) {
-                    const cb = document.getElementById(id);
-                    if (cb) {
-                        cb.checked = statusObject[id];
-                    }
-                }
-            }
-        }
-
-        // Activeer de persistentie-laadfunctie direct bij het opstarten
-        window.onload = loadChecklistStatus;
     </script>
 </body>
 </html>
