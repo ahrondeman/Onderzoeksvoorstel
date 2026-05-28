@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onderzoeksvoorstel – Interactieve Theorie & Handleiding</title>
+    <style>
+        :root {
+            --primary-color: #003366;
+            --secondary-color: #4A90E2;
+            --accent-color: #E6F0FA;
+            --text-dark: #333333;
+            --text-light: #FFFFFF;
+            --border-color: #D6D6D6;
+            --error-color: #D32F2F;
+            --success-color: #388E3C;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: #F8F9FA;
+            color: var(--text-dark);
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigatie */
+        .sidebar {
+            width: 280px;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            padding: 20px 0;
+            overflow-y: auto;
+            z-index: 100;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+
+        .sidebar h2 {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 10px 15px 20px 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            font-weight: 600;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 15px 0;
+        }
+
+        .sidebar ul li a {
+            display: block;
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            padding: 12px 25px;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            color: var(--text-light);
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left-color: var(--secondary-color);
+            padding-left: 30px;
+        }
+
+        /* Hoofdinhoud */
+        .main-content {
+            margin-left: 280px;
+            padding: 40px;
+            width: calc(100% - 280px);
+            max-width: 1100px;
+        }
+
+        header {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .intro-box {
+            background-color: var(--accent-color);
+            border-left: 5px solid var(--secondary-color);
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .intro-box ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        /* Accordion / Sectie Styles */
+        .section-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .section-card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+
+        .section-header {
+            background-color: #ffffff;
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: background-color 0.2s;
+        }
+
+        .section-header:hover {
+            background-color: #F1F5F9;
+        }
+
+        .section-title-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-icon {
+            font-size: 1.3rem;
+        }
+
+        .section-header h3 {
+            color: var(--primary-color);
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .toggle-arrow {
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+            color: #666;
+        }
+
+        .section-card.active .toggle-arrow {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            display: none;
+            padding: 25px;
+            border-top: 1px solid var(--border-color);
+            background-color: #FCFDFE;
+            line-height: 1.6;
+        }
+
+        .section-card.active .section-content {
+            display: block;
+        }
+
+        /* Sub-blokken binnen de theorie */
+        .info-block {
+            margin-bottom: 20px;
+        }
+
+        .info-block h4 {
+            color: var(--secondary-color);
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+            border-bottom: 1px solid #E2E8F0;
+            padding-bottom: 4px;
+        }
+
+        .theory-tag {
+            display: inline-block;
+            background-color: #EDF2F7;
+            color: #4A5568;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .error-box {
+            background-color: #FFF5F5;
+            border-left: 4px solid var(--error-color);
+            padding: 12px 15px;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+
+        .error-box ul {
+            margin-left: 20px;
+        }
+
+        .example-box {
+            background-color: #F0FDF4;
+            border-left: 4px solid var(--success-color);
+            padding: 12px 15px;
+            margin-top: 10px;
+            border-radius: 4px;
+            font-style: italic;
+        }
+
+        /* Checklist Styles */
+        .checklist-container {
+            background: #ffffff;
+            border: 2px solid var(--primary-color);
+            border-radius: 6px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+
+        .checklist-container h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            margin-top: 4px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checklist-item label {
+            cursor: pointer;
+            font-size: 0.98rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+                box-shadow: none;
+            }
+            .main-content {
+                width: 100%;
+                margin-left: 0;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <h2>Onderzoekstool</h2>
+        <ul>
+            <li><a href="#start" class="active" onclick="scrollToSection('start')">🏠 Startpagina</a></li>
+            <li><a href="#onderzoeksvraag" onclick="scrollToSection('onderzoeksvraag')">💡 Onderzoeksvraag</a></li>
+            <li><a href="#probleemstelling" onclick="scrollToSection('probleemstelling')">⚠️ Probleemstelling</a></li>
+            <li><a href="#hypothese" onclick="scrollToSection('hypothese')">🔮 Hypothese</a></li>
+            <li><a href="#theoretisch-kader" onclick="scrollToSection('theoretisch-kader')">📚 Theoretisch Kader</a></li>
+            <li><a href="#variabelen" onclick="scrollToSection('variabelen')">📊 Variabelen</a></li>
+            <li><a href="#operationalisering" onclick="scrollToSection('operationalisering')">📏 Operationalisering</a></li>
+            <li><a href="#onderzoeksdesign" onclick="scrollToSection('onderzoeksdesign')">🛠️ Onderzoeksdesign</a></li>
+            <li><a href="#steekproef" onclick="scrollToSection('steekproef')">👥 Steekproef</a></li>
+            <li><a href="#dataverzameling" onclick="scrollToSection('dataverzameling')">📥 Dataverzameling</a></li>
+            <li><a href="#validiteit-betrouwbaarheid" onclick="scrollToSection('validiteit-betrouwbaarheid')">🎯 Kwaliteitscriteria</a></li>
+            <li><a href="#data-analyse" onclick="scrollToSection('data-analyse')">📈 Data-analyse</a></li>
+            <li><a href="#ethiek" onclick="scrollToSection('ethiek')">⚖️ Ethiek</a></li>
+            <li><a href="#checklist" onclick="scrollToSection('checklist')">✅ Checklist</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <header id="start">
+            <h1>Onderzoeksvoorstel</h1>
+            <p>Interactieve Theorie & Handleiding</p>
+        </header>
+
+        <section class="intro-box">
+            <h4>Welkom bij de Interactieve Kennistool</h4>
+            <p>Dit instrument helpt je stap voor stap bij het opbouwen van een methodologisch correct en consistent onderzoeksvoorstel volgens de richtlijnen van de Faculteit Ontwerpwetenschappen (UAntwerpen, 2026). Je hoeft het voorgestelde onderzoek <strong>niet</strong> daadwerkelijk uit te voeren; het gaat om een praktijkgerichte simulatie van het planningsproces.</p>
+            <ul>
+                <li><strong>Klik</strong> op de onderstaande onderdelen om de theorie, toepassingen en veelgemaakte fouten te bekijken.</li>
+                <li>Gebruik het <strong>navigatiemenu</strong> om direct naar een specifiek onderdeel te springen.</li>
+                <li>Gebruik de <strong>checklist</strong> onderaan voor je finale kwaliteitscontrole.</li>
+                <li><em>Omvangsjabloon:</em> Het finale onderzoeksvoorstel bevat minimaal 10 en maximaal 20 pagina's.</li>
+            </ul>
+        </section>
+
+        <div class="section-card" id="onderzoeksvraag">
+            <div class="section-header" onclick="toggleSection('onderzoeksvraag')">
+                <div class="section-title-container">
+                    <span class="section-icon">💡</span>
+                    <h3>Onderzoeksvraag</h3>
+                </div>
+                <span class="toggle-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <span class="theory-tag">College 3 & 4: Wat is goed onderzoek?</span>
+                <div class="info-block">
+                    <h4>Kernuitleg</h4>
+                    <p>De onderzoeksvraag is de centrale, heldere en gerichte vraag die je gehele onderzoek leidt. Ze bakent exact af wat je wilt ontdekken.</p>
+                </div>
+                <div class="info-block">
+                    <h4>Theorie uit de lessen</h4>
+                    <p>Een goede onderzoeksvraag moet specifiek, helder, meetbaar en relevant zijn voor het vakgebied. De vraag stuurt de keuze voor je onderzoeksstrategie en methodologie aan. Evaluatie gebeurt via kleurfeedback (Groen = bruikbaar, Geel = aanscherpen, Rood = te breed/vaag/herzien).</p>
+                </div>
+                <div class="info-block">
+                    <h4>Toepassing in het onderzoeksvoorstel</h4>
+                    <p>Formuleer één duidelijke, overkoepelende hoofdvraag. Voeg indien nodig subvragen (deelvragen) toe die stapsgewijs bijdragen aan het beantwoorden van de hoofdvraag. Zorg dat de vraag direct aansluit bij de vastgestelde kennislacune.</p>
+                </div>
+                <div class="example-box">
+                    <strong>Voorbeeld:</strong><br>
+                    Hoofdvraag: <em>"Welke lettertypen worden door gebruikers als het meest leesbaar en aantrekkelijk ervaren in mobiele apps?"</em><br>
+                    Subvraag: <em>"Hoe beïnvloedt het lettertype de snelheid waarmee gebruikers teksten lezen?"</em>
+                </div>
+                <div class="error-box">
+                    <strong>Veelgemaakte fouten:</strong>
+                    <ul>
+                        <li>De vraag is te breed of vaag (bijv. "Hoe maken we betere apps?").</li>
+                        <li>Het antwoord is een simpele 'ja' of 'nee' zonder diepgang.</li>
+                        <li>De vraag richt zich op acties in plaats van het vergaren van kennis.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="probleemstelling">
+            <div class="section-header" onclick="toggleSection('probleemstelling')">
+                <div class="section-title-container">
+                    <span class="section-icon">⚠️</span>
+                    <h3>Probleemstelling</h3>
+                </div>
+                <span class="toggle-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <span class="theory-tag">College 3 & 4: Introductie</span>
+                <div class="info-block">
+                    <h4>Kernuitleg</h4>
+                    <p>De probleemstelling beschrijft de context, de motivatie van het onderzoek, het concrete probleem in de praktijk of theorie, en de kennislacune (research gap).</p>
+                </div>
+                <div class="info-block">
+                    <h4>Theorie uit de lessen</h4>
+                    <p>Een goed onderzoek vertrekt vanuit een reële noodzaak of onduidelijkheid. Je moet aantonen wat er reeds onderzocht is en waar de 'lacune' zit: welke specifieke vragen over het thema blijven in de bestaande literatuur onbeantwoord?</p>
+                </div>
+                <div class="info-block">
+                    <h4>Toepassing in het onderzoeksvoorstel</h4>
+                    <p>Schrijf een introductie van 3 à 4 pagina's waarin je de lezer meeneemt in het probleem. Beargumenteer waarom dit probleem belangrijk is voor ontwerpers of stakeholders en eindig logisch richting je kennislacune.</p>
+                </div>
+                <div class="error-box">
+                    <strong>Veelgemaakte fouten:</strong>
+                    <ul>
+                        <li>Geen duidelijke kennislacune identificeren (doen alsof er nog helemaal niks bestaat, of juist een al opgelost probleem opnieuw willen doen).</li>
+                        <li>Te veel focussen op een commerciële of persoonlijke mening in plaats van academische/praktische relevantie.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="hypothese">
+            <div class="section-header" onclick="toggleSection('hypothese')">
+                <div class="section-title-container">
+                    <span class="section-icon">🔮</span>
+                    <h3>Hypothese</h3>
+                </div>
+                <span class="toggle-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <span class="theory-tag">College 5: De wetenschappelijke methode</span>
+                <div class="info-block">
+                    <h4>Kernuitleg</h4>
+                    <p>Een hypothese is een toetsbare, voorspellende stelling over de verwachte relatie tussen twee of meerdere variabelen, gebaseerd op literatuur of eerdere observaties.</p>
+                </div>
+                <div class="info-block">
+                    <h4>Theorie uit de lessen</h4>
+                    <p>Binnen de deductieve benadering van de wetenschappelijke methode stel je een hypothese op vóór de dataverzameling. Het doel van het onderzoek is vervolgens om te testen of deze hypothese ondersteund (bevestigd) of verworpen moet worden.</p>
+                </div>
+                <div class="info-block">
+                    <h4>Toepassing in het onderzoeksvoorstel</h4>
+                    <p>Indien je kiest voor een verklarend of experimenteel design, formuleer dan een heldere hypothese die direct voortvloeit uit je theoretisch kader. Zorg dat de operationalisering direct aansluit om deze hypothese meetbaar te maken.</p>
+                </div>
+                <div class="example-box">
+                    <strong>Voorbeeld:</strong> <em>"Schreefloze lettertypen (sans-serif) leiden tot een hogere leessnelheid op mobiele interfaces dan schreeflettertypen (serif)."</em>
+                </div>
+                <div class="error-box">
+                    <strong>Veelgemaakte fouten:</strong>
+                    <ul>
+                        <li>Formuleren van een vage verwachting in plaats van een scherpe, toetsbare stelling.</li>
+                        <li>Achteraf aanpassen van de hypothese aan de data (niet van toepassing op dit voorstel, maar conceptueel belangrijk).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="theoretisch-kader">
+            <div class="section-header" onclick="toggleSection('theoretisch-kader')">
+                <div class="section-title-container">
+                    <span class="section-icon">📚</span>
+                    <h3>Theoretisch kader</h3>
+                </div>
+                <span class="toggle-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <span class="theory-tag">College 2 & 3: Literatuuronderzoek</span>
+                <div class="info-block">
+                    <h4>Kernuitleg</h4>
+                    <p>Het theoretisch kader biedt de wetenschappelijke fundering van je onderzoek door bestaande theorieën, modellen en eerdere empirische studies kritisch te analyseren en te structureren.</p>
+                </div>
+                <div class="info-block">
+                    <h4>Theorie uit de lessen</h4>
+                    <p>Het literatuuronderzoek kan chronologisch, thematisch, methodologisch of theoretisch worden gestructureerd. Je analyseert kritisch: Wat werd er reeds onderzocht? Welke methoden werden gebruikt? Wat waren de beperkingen en wie waren de deelnemers?</p>
+                </div>
+                <div class="info-block">
+                    <h4>Toepassing in het onderzoeksvoorstel</h4>
+                    <p>Raadpleeg en vermeld <strong>minstens vijf wetenschappelijke bronnen</strong> in je introductie om je keuzes te ondersteunen. Gebruik hierbij verplicht correcte in-tekst referenties en een referentielijst in de officiële <strong>APA-stijl</strong>.</p>
+                </div>
+                <div class="example-box">
+                    <strong>Voorbeeld APA-referenties:</strong><br>
+                    In-tekst: <em>"Typografie speelt een fundamentele rol bij tekstbegrip op schermen (Lupton, 2010)."</em><br>
+                    Referentielijst: <em>Fialkowski, B., & Schofield, D. (2024). Considering Color: Applying Psychology to Improve the Use of Color in Digital Interfaces. Art and Design Review, 12, 306–324.</em>
+                </div>
+                <div class="error-box">
+                    <strong>Veelgemaakte fouten:</strong>
+                    <ul>
+                        <li>Gebruik van onbetrouwbare of niet-wetenschappelijke bronnen (zoals Wikipedia of vage blogs).</li>
+                        <li>Louter opsommen van samenvattingen zonder synthese of kritische analyse.</li>
+                        <li>Fouten in de APA-notatie of plegen van plagiaat (andermans ideeën presenteren zonder bron).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="variabelen">
+            <div class="section-header" onclick="toggleSection('variabelen')">
+                <div class="section-title-container">
+                    <span class="section-icon">📊</span>
+                    <h3>Variabelen</h3>
+                </div>
+                <span class="toggle-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <span class="theory-tag">College 5 & 6: Kwantitatieve concepten</span>
+                <div class="info-block">
+                    <h4>Kernuitleg</h4>
+                    <p>Een variabele is een kenmerk, eigenschap of eigenschap die verschillende waarden kan aannemen (bijv. leeftijd, leessnelheid, lettertype).</p>
+                </div>
+                <div class="info-block">
+                    <h4>Theorie uit de lessen</h4>
+                    <p>In causaal of correlationeel onderzoek maken we onderscheid tussen verschillende typen variabelen:
+                    <ul>
+                        <li><strong>Onafhankelijke variabele:</strong> De variabele die door de onderzoeker wordt gemanipuleerd of geselecteerd om het effect te bekijken.</li>
+                        <li><strong>Afhankelijke variabele:</strong> De variabele die wordt gemeten om het effect te observeren (de uitkomst).</li>
+                        <li><strong>Storende variabelen:</strong> Externe factoren die ongewenst het resultaat kunnen beïnvloeden en gecontroleerd moeten worden.</li>
+                    </ul>
+                    </p>
+                </div>
+                <div class="info-block">
+                    <h4>Toepassing in het onderzoeksvoorstel</h4>
+                    <p>Benoem expliciet welke variabelen centraal staan in jouw voorgestelde opzet. Geef duidelijk aan wat de onafhankelijke variabele is en welke afhankelijke effecten je in kaart brengt.</p>
+                </div>
+                <div class="example-box">
+                    <strong>Voorbeeld:</strong><br>
+                    Onafhankelijke variabele: Type font (bv. Arial vs. Times New Roman).<br>
+                    Afhankelijke variabele: Leessnelheid (aantal woorden per minuut).
+                </div>
+                <div class="error-box">
+                    <strong>Veelgemaakte fouten:</strong>
+                    <ul>
+                        <li>De onafhankelijke en afhankelijke variabele met elkaar verwarren.</li>
+                        <li>Storende variabelen (zoals schermhelderheid of voorkennis van de tekst) over het hoofd zien.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="operationalisering">
+            <div class="section-header" onclick="toggleSection('operationalisering')">
+                <div class="section-title-container">
+                    <span class="section-icon">📏</span>
+                    <h3>Operationalisering</h3>
+                </div>
+                <span class="toggle-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <span class="theory-tag">College 5 & 7: Meetbaar maken</span>
+                <div class="info-block">
+                    <h4>Kernuitleg</h4>
+                    <p>Operationalisering is het proces waarbij abstracte concepten of variabelen worden omgezet in concrete, meetbare indicatoren of operaties.</p>
+                </div>
+                <div class="info-block">
+                    <h4>Theorie uit de lessen</h4>
+                    <p>Concepten zoals "gebruikerservaring", "aantrekkelijkheid" of "leesbaarheid" zijn abstract. Je moet helder definiëren met welke instrumenten of schalen (bijv. Likert-schalen in een enquête of objectieve prestatiemetingen) deze concepten concreet gekwantificeerd worden.</p>
+                </div>
+                <div class="info-block">
+                    <h4>Toepassing in het onderzoeksvoorstel</h4>
+                    <p>Leg in je methodologie haarscherp uit <em>hoe</em> je de variabelen gaat meten. Als je een enquête gebruikt, specificeer dan de vragen of het type schaal.</p>
+                </div>
+                <div class="example-box">
+                    <strong>Voorbeeld:</strong> Het abstracte concept "Aantrekkelijkheid van een lettertype" operationaliseren naar een 5-punts Likert-schaal gaande van 1 (Zeer onaantrekkelijk) tot 5 (Zeer aantrekkelijk).
+                </div>
+                <div class="error-box">
+                    <strong>Veelgemaakte fouten:</strong>
+                    <ul>
+                        <li>Variabelen te vaag laten (bijv. "We gaan kijken of ze het leuk vinden" zonder aan te geven hoe 'leuk' gemeten wordt).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="onderzoeksdesign">
+            <div class="section-header" onclick="toggleSection('onderzoeksdesign')">
+                <div class="section-title-container">
+                    <span class="section-icon">🛠️</span>
+                    <h3>Onderzoeksdesign / Methode</h3>
+                </div>
+                <span class="toggle-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <span class="theory-tag">College 6, 8 & 9: Strategieën en UCD</span>
+                <div class="info-block">
+                    <h4>Kernuitleg</h4>
+                    <p>Het onderzoeksdesign is de algemene blauwdruk of aanpak van je onderzoek, bepaald door de aard van je onderzoeksvraag.</p>
+                </div>
+                <div class="info-block">
+                    <h4>Theorie uit de lessen</h4>
+                    <p>De lessen onderscheiden hoofdstrategieën:
+                    <ul>
+                        <li><strong>Beschrijvend:</strong> Gericht op een momentopname van specifieke kenmerken van één individuele variabele bij een groep.</li>
+                        <li><strong>Correlationeel / Niet-experimenteel:</strong> Relaties onderzoeken tussen variabelen zoals ze natuurlijk voorkomen, zonder manipulatie.</li>
+                        <li><strong>Experimenteel:</strong> Oorzaak-gevolgrelaties (causaliteit) vaststellen door manipulatie van de onafhankelijke variabele en controle van storende factoren.</li>
+                        <li><strong>User-Centered Design (UCD) / Human-Centered Design (HCD):</strong> Iteratieve benaderingen (Double Diamond) die diepgaand focussen op de eindgebruiker via exploratief, generatief of evaluatief onderzoek (zoals usability tests).</li>
+                    </ul>
+                    </p>
+                </div>
+                <div class="info-block">
+                    <h4>Toepassing in het onderzoeksvoorstel</h4>
+                    <p>Onderbouw de keuze voor je specifieke onderzoeksaanpak uitgebreid. Leg niet alleen uit <em>wat</em> je gaat doen, maar beargumenteer expliciet <em>waarom</em> dit de juiste methode is voor jouw probleemstelling.</p>
+                </div>
+                <div class="error-box">
+                    <strong>Veelgemaakte fouten:</strong>
+                    <ul>
+                        <li>Verkeerde match tussen onderzoeksvraag en design (bijv. een causale conclusie willen trekken uit een puur beschrijvende enquête).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="steekproef">
+            <div class="section-header" onclick="toggleSection('steekproef')">
+                <div class="section-title-container">
+                    <span class="section-icon">👥</span>
+                    <h3>Steekproef</h3>
+                </div>
+                <span class="toggle-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <span class="theory-tag">College 5 & 7: Deelnemers</span>
+                <div class="info-block">
+                    <h4>Kernuitleg</h4>
+                    <p>De steekproef (sample) is de geselecteerde groep individuen uit de grotere doelpopulatie die daadwerkelijk deelneemt aan het onderzoek.</p>
+                </div>
+                <div class="info-block">
+                    <h4>Theorie uit de lessen</h4>
+                    <p>Om resultaten te kunnen generaliseren (externe validiteit) is een <strong>representatieve steekproef</strong> cruciaal. Dit betekent dat de kenmerken van de steekproef een nauwkeurige afspiegeling moeten vormen van de totale populatie.</p>
+                </div>
+                <div class="info-block">
+                    <h4>Toepassing in het onderzoeksvoorstel</h4>
+                    <p>Beschrijf gedetailleerd de kenmerken van je beoogde deelnemers (demografie, selectiecriteria). Leg uit hoe je voor een representatieve steekproef zorgt en hoe je de rekrutering praktisch organiseert.</p>
+                </div>
+                <div class="error-box">
+                    <strong>Veelgemaakte fouten:</strong>
+                    <ul>
+                        <li>Een te kleine of sterk vertekende steekproef kiezen (bijv. alleen je eigen groepsleden ondervragen) en toch beweren dat de resultaten gelden voor "alle app-gebruikers".</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="dataverzameling">
+            <div class="section-header" onclick="toggleSection('dataverzameling')">
+                <div class="section-title-container">
+                    <span class="section-icon">📥</span>
+                    <h3>Dataverzameling</h3>
+                </div>
+                <span class="toggle-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <span class="theory-tag">College 7 & 9: Tools en data</span>
+                <div class="info-block">
+                    <h4>Kernuitleg</h4>
+                    <p>Dataverzameling omvat de concrete uitvoering en het gebruik van instrumenten (enquêtes, interviews, observaties, software) om gegevens te verzamelen.</p>
+                </div>
+                <div class="info-block">
+                    <h4>Theorie uit de lessen</h4>
+                    <p>Bij kwantitatief onderzoek (zoals een enquête) maak je gebruik van gestructureerde procedures. Bij UCD-onderzoek zet je specifieke methoden in afhankelijk van de fase (bijv. observations of usability tests).</p>
+                </div>
+                <div class="info-block">
+                    <h4>Toepassing in het onderzoeksvoorstel</h4>
+                    <p>Geef de praktische details: welke specifieke software of digitale tools gebruik je om de data te verzamelen? Voeg concreet een aantal voorbeeldvragen toe die je in de enquête of test zou opnemen.</p>
+                </div>
+                <div class="error-box">
+                    <strong>Veelgemaakte fouten:</strong>
+                    <ul>
+                        <li>Niet vermelden welke software of infrastructuur gebruikt wordt.</li>
+                        <li>De procedure zo vaag omschrijven dat een andere onderzoeker het niet zou kunnen repliceren.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="validiteit-betrouwbaarheid">
+            <div class="section-header" onclick="toggleSection('validiteit-betrouwbaarheid')">
+                <div class="section-title-container">
+                    <span class="section-icon">🎯</span>
+                    <h3>Validiteit & Betrouwbaarheid</h3>
+                </div>
+                <span class="toggle-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <span class="theory-tag">College 5: Kwaliteitscriteria</span>
+                <div class="info-block">
+                    <h4>Kwantitatieve Kwaliteitscriteria</h4>
+                    <p>
+                    <ul>
+                        <li><strong>Betrouwbaarheid (Reliability):</strong> Levert de meting consistente en stabiele resultaten bij herhaling? (Oplossing: gestandaardiseerde meetinstrumenten).</li>
+                        <li><strong>Interne Validiteit:</strong> Wordt er echt gemeten wat de studie beoogt te meten? Is er sprake van een zuivere oorzaak-gevolgrelatie zonder invloed van storende variabelen?</li>
+                        <li><strong>Externe Validiteit:</strong> Kunnen de resultaten gegeneraliseerd worden naar een bredere populatie of andere settings?</li>
+                    </ul>
+                    </p>
+                </div>
+                <div class="info-block">
+                    <h4>Kwalitatieve Kwaliteitscriteria</h4>
+                    <p>
+                    <ul>
+                        <li><strong>Afhankelijkheid (Dependability):</strong> Is de studie consistent en herhaalbaar gedocumenteerd?</li>
+                        <li><strong>Geloofwaardigheid (Credibility):</strong> Sluiten de bevindingen aan bij de reële ervaringen van deelnemers? (Oplossing: triangulatie, peer review).</li>
+                        <li><strong>Overdraagbaarheid (Transferability):</strong> Zijn de resultaten contextueel goed genoeg beschreven om bruikbaar te zijn in andere contexten?</li>
+                    </ul>
+                    </p>
+                </div>
+                <div class="info-block">
+                    <h4>Toepassing in het onderzoeksvoorstel</h4>
+                    <p>Reflecteer expliciet op deze criteria. Leg uit welke maatregelen je in je methodologie neemt om de betrouwbaarheid en validiteit van de dataverzameling te maximaliseren.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="data-analyse">
+            <div class="section-header" onclick="toggleSection('data-analyse')">
+                <div class="section-title-container">
+                    <span class="section-icon">📈</span>
+                    <h3>Data-analyse</h3>
+                </div>
+                <span class="toggle-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <span class="theory-tag">College 7 & 10: Verwachte resultaten</span>
+                <div class="info-block">
+                    <h4>Kernuitleg</h4>
+                    <p>Data-analyse beschrijft de wijze waarop de ruwe verzamelde data verwerkt en geïnterpreteerd zal worden om antwoord te geven op de onderzoeksvraag.</p>
+                </div>
+                <div class="info-block">
+                    <h4>Theorie uit de lessen</h4>
+                    <p>Voor kwantitatief onderzoek (zoals enquêtes) maak je gebruik van beschrijvende of inferentiële statistiek om patronen, ranglijsten, percentages of correlaties bloot te leggen.</p>
+                </div>
+                <div class="info-block">
+                    <h4>Toepassing in het onderzoeksvoorstel</h4>
+                    <p>Beschrijf bij de 'Verwachte resultaten' welke data-inzichten je denkt te genereren. Geef concreet aan wat voor soort visualisaties, grafieken of statistieken je verwacht te maken (bijvoorbeeld een ranglijst van de populairste of meest leesbare lettertypen).</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card" id="ethiek">
+            <div class="section-header" onclick="toggleSection('ethiek')">
+                <div class="section-title-container">
+                    <span class="section-icon">⚖️</span>
+                    <h3>Ethiek</h3>
+                </div>
+                <span class="toggle-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <span class="theory-tag">College 6: Onderzoeksethiek</span>
+                <div class="info-block">
+                    <h4>Kernwaarden van ethisch onderzoek</h4>
+                    <p>
+                    <ul>
+                        <li><strong>Respect:</strong> Waardeer de autonomie en privacy van de deelnemers. Zorg dat deelname volledig vrijwillig is en dat deelnemers zich op elk moment kunnen terugtrekken.</li>
+                        <li><strong>Welzijn:</strong> Minimaliseer risico's en weeg eventuele nadelen strikt af tegen de maatschappelijke/wetenschappelijke voordelen.</li>
+                        <li><strong>Rechtvaardigheid:</strong> Vermijd oneerlijke lasten of uitbuiting van specifieke groepen deelnemers.</li>
+                        <li><strong>Integriteit:</strong> Zoek op een eerlijke en transparante manier naar kennis en volg de erkende principes van goede onderzoekspraktijken.</li>
+                    </ul>
+                    </p>
+                </div>
+                <div class="info-block">
+                    <h4>Toepassing in het onderzoeksvoorstel</h4>
+                    <p>Geef in je methodologische sectie expliciet aan hoe je deze ethische aspecten hebt geïntegreerd. Denk aan het garanderen van anonimiteit, veilige dataopslag en de omgang met geïnformeerde toestemming (informed consent).</p>
+                </div>
+                <div class="error-box">
+                    <strong>Veelgemaakte fouten:</strong>
+                    <ul>
+                        <li>Ethiek volledig overstappen of behandelen als een formaliteit zonder concrete maatregelen voor privacy en databescherming.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <section class="checklist-container" id="checklist">
+            <h2>✅ Interactieve Checklist Onderzoeksvoorstel</h2>
+            <p style="margin-bottom: 15px; font-size: 0.95rem; color: #555;">Gebruik deze checklist voor de finale controle van je document om te zorgen dat je voldoet aan alle formele en inhoudelijke criteria:</p>
+            
+            <div class="checklist-item">
+                <input type="checkbox" id="chk1">
+                <label for="chk1"><strong>Formele omvang:</strong> Het voorstel telt minimaal 10 en maximaal 20 pagina's.</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="chk2">
+                <label for="chk2"><strong>Titelpagina:</strong> Bevat een korte, krachtige hoofdtitel, eventueel een ondertitel, alle namen van de groepsleden en 3-5 kernwoorden.</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="chk3">
+                <label for="chk3"><strong>Introductie (3-4 pg.):</strong> De probleemstelling is helder opgebouwd en mondt logisch uit in een duidelijke kennislacune (research gap).</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="chk4">
+                <label for="chk4"><strong>Wetenschappelijke bronnen:</strong> Er zijn minstens vijf academische bronnen kritisch geanalyseerd en verwerkt.</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="chk5">
+                <label key="chk5"><strong>APA-stijl:</strong> Alle bronnen zijn correct genoteerd via in-tekst referenties én opgenomen in de afsluitende referentielijst.</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="chk6">
+                <label for="chk6"><strong>Onderzoeksvraag:</strong> Er is één heldere, specifieke hoofdvraag geformuleerd, eventueel ondersteund door relevante subvragen.</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="chk7">
+                <label for="chk7"><strong>Methodologische verantwoording:</strong> De keuze voor de specifieke onderzoeksstrategie (beschrijvend, correlationeel, experimenteel of UCD) is beargumenteerd vanuit de theorie.</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="chk8">
+                <label for="chk8"><strong>Operationalisering & Steekproef:</strong> Variabelen zijn concreet meetbaar gemaakt en de criteria voor een representatieve steekproef zijn beschreven.</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="chk9">
+                <label for="chk9"><strong>Praktische details & Ethiek:</strong> Specifieke tools/vragen zijn toegevoegd en er is voldaan aan de ethische kernwaarden (privacy, anonimiteit, vrijwilligheid).</label>
+            </div>
+            <div class="checklist-item">
+                <input type="checkbox" id="chk10">
+                <label for="chk10"><strong>Verwachte resultaten:</strong> Er is beschreven welke data-inzichten worden verwacht, inclusief geplande grafieken, tabellen of ranglijsten.</label>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Functie voor het openen/sluiten van accordions
+        function toggleSection(id) {
+            const card = document.getElementById(id);
+            card.classList.toggle('active');
+        }
+
+        // Functie voor vloeiend scrollen en highlighten via het menu
+        function scrollToSection(id) {
+            event.preventDefault();
+            
+            // Scroll naar element
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            // Update actieve menu link
+            const links = document.querySelectorAll('.sidebar ul li a');
+            links.forEach(link => link.classList.remove('active'));
+            
+            const activeLink = document.querySelector(`.sidebar ul li a[href="#${id}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+
+            // Als het een accordion is, open deze automatisch bij navigatie via menu
+            if (id !== 'start' && id !== 'checklist') {
+                const card = document.getElementById(id);
+                if (card && !card.classList.contains('active')) {
+                    card.classList.add('active');
+                }
+            }
+        }
+
+        // Dynamische update van actieve menu-item tijdens scrollen
+        window.addEventListener('scroll', () => {
+            const sections = ['start', 'onderzoeksvraag', 'probleemstelling', 'hypothese', 'theoretisch-kader', 'variabelen', 'operationalisering', 'onderzoeksdesign', 'steekproef', 'dataverzameling', 'validiteit-betrouwbaarheid', 'data-analyse', 'ethiek', 'checklist'];
+            let currentSection = 'start';
+
+            sections.forEach(section => {
+                const element = document.getElementById(section);
+                if (element) {
+                    const rect = element.getBoundingClientRect();
+                    // Als de sectie over de helft van het scherm is
+                    if (rect.top <= window.innerHeight / 3) {
+                        currentSection = section;
+                    }
+                }
+            });
+
+            const links = document.querySelectorAll('.sidebar ul li a');
+            links.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
